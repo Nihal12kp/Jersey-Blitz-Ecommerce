@@ -1,0 +1,97 @@
+/* UsersList.css */
+
+.users-list {
+    width: 80%;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .users-list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #444;
+  }
+  
+  .error {
+    color: #d9534f;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  thead {
+    background-color:#4c56af;
+    color: #fff;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #e9f5e9;
+  }
+  
+  td {
+    color: #555;
+  }
+  
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  button {
+    background-color: #4c56af;
+    color: white;
+  }
+  
+  button.banned {
+    background-color: #d9534f;
+  }
+  
+  button.unbanned {
+    background-color:#4c56af;
+  }
+  
+  button.banned:hover {
+    background-color: #c9302c;
+  }
+  
+  button.unbanned:hover {
+    background-color: #388e3c;
+  }
+  
