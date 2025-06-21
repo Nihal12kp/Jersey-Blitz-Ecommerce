@@ -1,7 +1,7 @@
-import './CSS/SignUp.css'; // Assuming you have a combined CSS file
-import Navbar from '../Components/Navbar/Navbar';
-import { useState } from 'react';
-import Footer from '../Components/Footer/Footer';
+import "./CSS/SignUp.css"; // Assuming you have a combined CSS file
+import Navbar from "../Components/Navbar/Navbar";
+import { useState } from "react";
+import Footer from "../Components/Footer/Footer";
 
 export const LoginSignup = () => {
   const [state, setState] = useState("Login");
@@ -16,18 +16,16 @@ export const LoginSignup = () => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
-  // Login function to call the backend login endpoint
   const login = async () => {
     console.log("Login function Exicuted");
     let responseData;
-    await fetch('http://localhost:4000/login', {
-      method: 'POST',
+    await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        
         email: formdata.email,
         password: formdata.password,
       }),
@@ -36,52 +34,55 @@ export const LoginSignup = () => {
       .then((data) => (responseData = data));
 
     if (responseData.success) {
-      localStorage.setItem('auth-token', responseData.token); // Store the token
-      window.location.replace("/"); // Redirect to home page
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
     } else {
-      setErrorMessage(responseData.errors || "Login failed. Please try again."); // Display error if login fails
+      setErrorMessage(responseData.errors || "Login failed. Please try again.");
     }
   };
 
-  // Signup function to call the backend signup endpoint
   const signup = async () => {
     console.log("signup function exicuted");
     try {
-      const response = await fetch('http://localhost:4000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json',
-        },
-        body: JSON.stringify({
-          username: formdata.username, // Ensure consistent naming
-          email: formdata.email,
-          password: formdata.password,
-        }),
-      });
-  
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/auth/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formdata.username,
+            email: formdata.email,
+            password: formdata.password,
+          }),
+        }
+      );
+
       const responseData = await response.json();
-      console.log(responseData); // Log response for debugging
-  
+      console.log(responseData);
+
       if (response.ok && responseData.success) {
-        localStorage.setItem('auth-token', responseData.token); // Store the token
-        window.location.replace("/"); // Redirect to home page
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
       } else {
-        setErrorMessage(responseData.error || "Signup failed. Please try again.");
+        setErrorMessage(
+          responseData.error || "Signup failed. Please try again."
+        );
       }
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error("Signup error:", error);
       setErrorMessage("An error occurred. Please try again.");
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrorMessage(null); // Clear previous errors
+    setErrorMessage(null);
     if (state === "Login") {
-      login(); // Call login function
+      login();
     } else {
-      signup(); // Call signup function
+      signup();
     }
   };
 
@@ -92,10 +93,8 @@ export const LoginSignup = () => {
         <div className="loginsingup-container">
           <h1>{state}</h1>
 
-          {/* Display error message if any */}
           {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-          {/* Form for login/signup */}
           <form onSubmit={handleSubmit}>
             <div className="loginsignup-fields">
               {state === "Sign Up" && (
@@ -125,9 +124,18 @@ export const LoginSignup = () => {
                 onChange={changeHandler}
                 placeholder="Password"
                 required
-                autoComplete={state === "Login" ? "current-password" : "new-password"}
+                autoComplete={
+                  state === "Login" ? "current-password" : "new-password"
+                }
               />
             </div>
+
+            {/* ✅ Moved checkbox before button */}
+            <div className="loginsignup-agree">
+              <input type="checkbox" required />
+              <p>By continuing, I agree to the terms of use & privacy policy</p>
+            </div>
+
             <button type="submit">Continue</button>
           </form>
 
@@ -146,14 +154,9 @@ export const LoginSignup = () => {
               </span>
             </p>
           )}
-
-          <div className="loginsignup-agree">
-            <input type="checkbox" name="" id="" required />
-            <p>By continuing, I agree to the terms of use & privacy policy</p>
-          </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

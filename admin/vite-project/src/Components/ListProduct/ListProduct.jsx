@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import './ListProduct.css';
-import cross_icon from '../../assets/cross_icon.png';
+import React, { useEffect, useState } from "react";
+import "./ListProduct.css";
+import cross_icon from "../../assets/cross_icon.png";
 
 const ListProduct = () => {
   const [allproducts, setAllproducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // Track selected product for updating
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({
-    name: '',
-    old_price: '',
-    new_price: '',
-    category: '',
-    sizes: []
+    name: "",
+    old_price: "",
+    new_price: "",
+    category: "",
+    sizes: [],
   });
 
-  // Fetch all products
   const fetchInfo = async () => {
-    const res = await fetch('http://localhost:4000/allproducts');
+    const res = await fetch("http://localhost:4000/product/allproducts");
+    // console.log(`${process.env.REACT_APP_SERVER_URL}/product/allproducts`)
     const data = await res.json();
+    console.log(data)
     if (res.ok) {
       setAllproducts(data);
     }
@@ -26,25 +27,18 @@ const ListProduct = () => {
     fetchInfo();
   }, []);
 
-  // Remove product by ID
   const remove_product = async (productId) => {
-    await fetch('http://localhost:4000/removeproduct', {
-      method: 'POST',
+    await fetch(`http://localhost:4000/product/removeproduct`, {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId }),
     });
-    fetchInfo(); // Fetch the updated product list after deletion
+    fetchInfo();
   };
 
-  // Helper function to calculate total stock
-  const calculateTotalStock = (sizes) => {
-    return sizes?.reduce((total, size) => total + size.stock, 0) || 0;
-  };
-
-  // Open the update modal with pre-filled data
   const handleUpdateProduct = (product) => {
     setSelectedProduct(product);
     setUpdatedProduct({
@@ -52,35 +46,36 @@ const ListProduct = () => {
       old_price: product.old_price,
       new_price: product.new_price,
       category: product.category,
-      sizes: product.sizes
+      sizes: product.sizes,
     });
   };
 
- // Update product details
-const updateProduct = async () => {
-  const res = await fetch('http://localhost:4000/updateproduct', {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-          productId: selectedProduct._id, // The product ID being updated
-          updatedProduct // The updated product data to be saved
-      }),
-  });
+  const updateProduct = async () => {
+    const res = await fetch(
+      `http://localhost:4000/product/updateproduct`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: selectedProduct._id,
+          updatedProduct,
+        }),
+      }
+    );
 
-  if (res.ok) {
-      fetchInfo(); // Fetch updated list after the update
-      setSelectedProduct(null); // Close the update modal
-  } else {
-      alert('Failed to update product');
-  }
-};
-
+    if (res.ok) {
+      fetchInfo();
+      setSelectedProduct(null);
+    } else {
+      alert("Failed to update product");
+    }
+  };
 
   return (
-    <div className='listproduct'>
+    <div className="listproduct">
       <h1>All Product List</h1>
       <div className="listproduct-format-main">
         <p>Products</p>
@@ -88,33 +83,60 @@ const updateProduct = async () => {
         <p>Old Price</p>
         <p>New Price</p>
         <p>Category</p>
-        <p>Total Stock</p>
+        <p>Stock</p>
         <p>Remove</p>
-        <p>Update</p> {/* Add Update column */}
+        <p>Update</p>
       </div>
       <div className="listproduct-allproducts">
-        <hr/>
-        {allproducts.map((product) => {
-          const totalStock = calculateTotalStock(product.sizes); // Calculate total stock
-          return (
-            <div key={product._id} className="listproduct-format-main listproduct-format">
-              <img src={product.image} alt="" className="listproduct-product-icon" />
-              <p>{product.name}</p>
-              <p>${product.old_price}</p>
-              <p>${product.new_price}</p>
-              <p>{product.category}</p>
-              <p>{totalStock}</p> {/* Display total stock */}
-              <img
-                onClick={() => { remove_product(product._id); }}
-                className='listproduct-remove-icon'
-                src={cross_icon}
-                alt="Remove"
-              />
-              <button onClick={() => handleUpdateProduct(product)}>Update</button> {/* Add Update button */}
-              <hr />
-            </div>
-          );
-        })}
+        <hr />
+        {allproducts.map((product) => (
+          <div
+            key={product._id}
+            className="listproduct-format-main listproduct-format"
+          >
+            <img
+              src={product.image}
+              alt=""
+              className="listproduct-product-icon"
+            />
+            <p>{product.name}</p>
+            <p>${product.old_price}</p>
+            <p>${product.new_price}</p>
+            <p>{product.category}</p>
+            <p>
+              {product.inStock ? "In Stock" : "Out of Stock"}
+              <br />
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={product.inStock}
+                  onChange={() => toggleProductStock(product._id)}
+                />
+                <span className="slider round"></span>
+              </label>
+            </p>
+            {/* Display Out of Stock for unavailable products */}
+            {/* <p>
+              {!product.inStock && <span style={{ color: 'red', fontWeight: 'bold' }}>Out of Stock</span>}
+            </p> */}
+            <img
+              onClick={() => {
+                remove_product(product._id);
+              }}
+              className="listproduct-remove-icon"
+              src={cross_icon}
+              alt="Remove"
+            />
+            {/* Disable the "Update" button if the product is out of stock */}
+            <button
+              onClick={() => handleUpdateProduct(product)}
+              disabled={!product.inStock}
+            >
+              Update
+            </button>
+            <hr />
+          </div>
+        ))}
       </div>
 
       {/* Update Product Modal */}
@@ -126,28 +148,45 @@ const updateProduct = async () => {
             <input
               type="text"
               value={updatedProduct.name}
-              onChange={(e) => setUpdatedProduct({ ...updatedProduct, name: e.target.value })}
+              onChange={(e) =>
+                setUpdatedProduct({ ...updatedProduct, name: e.target.value })
+              }
             />
             <label>Old Price:</label>
             <input
               type="number"
               value={updatedProduct.old_price}
-              onChange={(e) => setUpdatedProduct({ ...updatedProduct, old_price: e.target.value })}
+              onChange={(e) =>
+                setUpdatedProduct({
+                  ...updatedProduct,
+                  old_price: e.target.value,
+                })
+              }
             />
             <label>New Price:</label>
             <input
               type="number"
               value={updatedProduct.new_price}
-              onChange={(e) => setUpdatedProduct({ ...updatedProduct, new_price: e.target.value })}
+              onChange={(e) =>
+                setUpdatedProduct({
+                  ...updatedProduct,
+                  new_price: e.target.value,
+                })
+              }
             />
             <label>Category:</label>
             <input
               type="text"
               value={updatedProduct.category}
-              onChange={(e) => setUpdatedProduct({ ...updatedProduct, category: e.target.value })}
+              onChange={(e) =>
+                setUpdatedProduct({
+                  ...updatedProduct,
+                  category: e.target.value,
+                })
+              }
             />
             <button onClick={updateProduct}>Update</button>
-            <button onClick={() => setSelectedProduct(null)}>Cancel</button> {/* Close modal */}
+            <button onClick={() => setSelectedProduct(null)}>Cancel</button>
           </div>
         </div>
       )}

@@ -21,14 +21,16 @@ h1 {
   margin: 0 auto;
 }
 
+/* Header Grid Layout */
 .listproduct-format-main {
   display: grid;
-  grid-template-columns: 150px 1fr 1fr 1fr 1fr 1fr 50px;
+  grid-template-columns: 150px 1fr 1fr 1fr 1fr 1fr 50px 100px;
   gap: 20px;
   font-weight: bold;
   color: #555;
   background-color: #ddd;
   padding: 10px;
+  border-radius: 8px;
 }
 
 .listproduct-format-main p {
@@ -36,19 +38,21 @@ h1 {
   text-align: center;
 }
 
+/* Product Items */
 .listproduct-allproducts {
   margin-top: 20px;
 }
 
 .listproduct-format {
   display: grid;
-  grid-template-columns: 150px 1fr 1fr 1fr 1fr 1fr 50px;
+  grid-template-columns: 150px 1fr 1fr 1fr 1fr 1fr 50px 100px;
   gap: 20px;
   padding: 15px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  align-items: center;
 }
 
 .listproduct-product-icon {
@@ -63,21 +67,40 @@ h1 {
   cursor: pointer;
 }
 
+/* Buttons */
 button {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 0.9rem;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-/* Update Modal Styles */
+/* Stock Toggle Cell */
+.listproduct-format p:nth-child(6) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+/* Out of Stock Text */
+.listproduct-format p span.out-of-stock {
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* Modal Styles */
 .update-modal {
   position: fixed;
   top: 0;
@@ -135,6 +158,8 @@ button:hover {
   font-size: 1rem;
   cursor: pointer;
   border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease;
 }
 
 .update-modal button:hover {
@@ -148,4 +173,159 @@ button:hover {
 
 .update-modal button:last-child:hover {
   background-color: #e53935;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4c56af;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+/* ======== Responsive Design ======== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .listproduct-format-main,
+  .listproduct-format {
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr 40px 80px;
+    gap: 15px;
+    font-size: 0.9rem;
+  }
+
+  .listproduct-format p:nth-child(6) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .update-modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Small Tablets / Large Phones */
+@media (max-width: 768px) {
+  .listproduct-format-main,
+  .listproduct-format {
+    grid-template-columns: 100px 1fr 1fr 80px;
+    gap: 10px;
+    font-size: 0.85rem;
+  }
+
+  .listproduct-format-main p:nth-child(n+5),
+  .listproduct-format p:nth-child(n+5) {
+    display: none; /* Hide extra columns */
+  }
+
+  .listproduct-product-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .listproduct-remove-icon {
+    width: 16px;
+  }
+
+  button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .listproduct-format-main,
+  .listproduct-format {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .listproduct-format p {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .listproduct {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .update-modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .update-modal h2 {
+    font-size: 1.3rem;
+  }
+
+  .update-modal input {
+    font-size: 0.95rem;
+  }
+
+  .update-modal button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .switch {
+    width: 40px;
+    height: 20px;
+  }
+
+  .slider:before {
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
 }

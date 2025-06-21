@@ -1,26 +1,65 @@
-.popular{
+.popular {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    height: 90vh;
-
+    height: auto;
+    padding: 40px 20px;
+    text-align: center;
 }
-.popular h1{
+
+.popular h1 {
     color: #4d4d4d;
-    font-size: 50px;
+    font-size: 2.5rem; /* relative units for scalability */
     font-weight: 600;
-
 }
-.popular hr{
-    width: 200px;
-    height: 6px;
+
+.popular hr {
+    width: 150px;
+    height: 4px;
     border-radius: 10px;
     background: #4d4d4d;
+    margin: 10px 0;
 }
-.popular-item{
-    margin-top: 10px;
+
+.popular-item {
+    margin-top: 20px;
     display: flex;
-    gap: 30px
-    ;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Responsive Typography & Layout */
+@media (max-width: 1024px) {
+    .popular h1 {
+        font-size: 2rem;
+    }
+    .popular hr {
+        width: 120px;
+    }
+    .popular-item {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .popular h1 {
+        font-size: 1.75rem;
+    }
+    .popular-item {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .popular h1 {
+        font-size: 1.5rem;
+    }
+    .popular-item {
+        gap: 10px;
+    }
 }

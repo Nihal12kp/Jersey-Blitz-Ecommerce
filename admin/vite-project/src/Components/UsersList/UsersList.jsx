@@ -6,16 +6,15 @@ const UsersList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch users from the backend
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem('auth-token'); // Get the token from localStorage
-        const response = await fetch('http://localhost:4000/users', {
+        const token = localStorage.getItem('auth-token');
+        const response = await fetch(`http://localhost:4000/auth/users`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'auth-token': token, // Include the token in the headers
-          }
+            'auth-token': token,
+          },
         });
 
         const data = await response.json();
@@ -34,35 +33,36 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
-  const handleToggleBan = async (userId) => {
-    try {
-      const token = localStorage.getItem('auth-token');
-      const response = await fetch('http://localhost:4000/toggleban', {
-        method: 'POST',
+  const handleBanUnban = async (userId, isBanned) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/users/${userId}/ban`,
+      {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'auth-token': token
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Update the user's banned status in the state
-        setUsers((prevUsers) =>
-          prevUsers.map((user) =>
-            user._id === userId ? { ...user, banned: !user.banned } : user
-          )
-        );
-      } else {
-        setError(data.message);
+        body: JSON.stringify({ isBanned: !isBanned }),
       }
-    } catch (error) {
-      setError('An error occurred while updating the user status');
-      console.error('Error toggling ban status:', error);
+    );
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Ban/Unban failed:", errorText);
+      return;
     }
-  };
+
+    // If successful, update local state
+    setUsers(
+      users.map((user) =>
+        user._id === userId ? { ...user, isBanned: !isBanned } : user
+      )
+    );
+  } catch (error) {
+    console.error("Error banning/unbanning user:", error);
+  }
+};
+
 
   return (
     <div className="users-list">
@@ -83,11 +83,11 @@ const UsersList = () => {
             <tr key={user._id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.cartData ? Object.keys(user.cartData).length : 0}</td>
+              <td>{user.cartData ? Object.values(user.cartData).reduce((sum, qty) => sum + qty, 0) : 0}</td>
               <td>{user.banned ? 'Banned' : 'Active'}</td>
               <td>
-                <button onClick={() => handleToggleBan(user._id)}>
-                  {user.banned ? 'Unban' : 'Ban'}
+                <button onClick={() =>handleBanUnban(user._id,user.isBanned)}>
+                  {user.isBanned ? 'Unban' : 'Ban'}
                 </button>
               </td>
             </tr>

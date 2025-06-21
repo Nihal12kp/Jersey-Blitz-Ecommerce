@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './RelatedProduct.css';
-import Item from '../Items/Item';
+import React, { useEffect, useState } from "react";
+import "./RelatedProduct.css";
+import Item from "../Items/Item";
 
 function RelatedProduct() {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/relatedproduct')
-      .then(response => response.json())
-      .then(data => setRelatedProducts(data))
-      .catch(error => console.error('Error fetching related products:', error));
+    fetch(`${process.env.REACT_APP_SERVER_URL}/product/relatedproduct`)
+      .then((response) => response.json())
+      .then((data) => setRelatedProducts(data))
+      .catch((error) =>
+        console.error("Error fetching related products:", error)
+      );
   }, []);
 
   return (
-    <div className='relatedproducts'>
+    <div className="relatedproducts">
       <h1>Related Products</h1>
       <hr />
       <div className="relatedproducts-item">

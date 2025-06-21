@@ -1,4 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+//TODO
+import slug from "mongoose-slug-generator";
+mongoose.plugin(slug);
 
 const productSchema = new mongoose.Schema(
   {
@@ -9,6 +12,10 @@ const productSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    slug: {
+      type: String,
+      slug: "name",
     },
     category: {
       type: String,
@@ -27,8 +34,12 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productId: {
-      type: String, // Optional field
-      required: false, // Not required
+      type: String,
+      required: false,
+    },
+    inStock: {
+      type: Boolean,
+      default: true,
     },
     sizes: [
       {
@@ -36,21 +47,16 @@ const productSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        stock: {
-          type: Number,
-          required: true,
-        },
       },
     ],
     date: {
       type: Date,
-      default: Date.now, // Automatically sets to current date
+      default: Date.now,
     },
   },
   { timestamps: true }
 );
 
-// Create a model using the schema
 const Product = mongoose.model("Product", productSchema);
 
-module.exports = Product;
+export default Product;

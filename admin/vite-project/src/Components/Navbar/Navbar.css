@@ -1,17 +1,55 @@
-.navbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding:  15px 60px;
-    box-shadow: 0 1px 3px -2px #000;
-    margin-bottom: 1px;
-    background: white;
+/* Base Styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 60px;
+  box-shadow: 0 1px 3px -2px #000;
+  margin-bottom: 1px;
+  background: white;
 }
-.nav-logo{
-    width: 200 px;
 
+.nav-logo {
+  width: 200px; /* fixed typo: "px" must not have a space */
 }
-.nav-profile{
-    width: 75px;
-    
+
+.nav-profile {
+  width: 75px;
+  height: auto;
+}
+
+/* ===== Responsive Design ===== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 30px;
+  }
+
+  .nav-logo {
+    width: 160px;
+  }
+
+  .nav-profile {
+    width: 60px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+
+  .nav-logo {
+    width: 140px;
+  }
+
+  .nav-profile {
+    width: 50px;
+    align-self: flex-end;
+  }
 }

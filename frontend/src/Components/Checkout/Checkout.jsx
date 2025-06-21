@@ -1,19 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ShopContext } from '../../Context/ShopContext';
-import './Checkout.css';
-import Footer from '../Footer/Footer';
-import Navbar from '../Navbar/Navbar';
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ShopContext } from "../../Context/ShopContext";
+import "./Checkout.css";
+import Footer from "../Footer/Footer";
+import Navbar from "../Navbar/Navbar";
 
 const Checkout = () => {
-  const { cartItems, all_product, getTotalCartAmount } = useContext(ShopContext);
+  const { cartItems, all_product, getTotalCartAmount } =
+    useContext(ShopContext);
   const [userDetails, setUserDetails] = useState({
-    fullName: '',
-    phone: '',
-    country: '',
-    city: '',
-    state: '',
-    zip: '',
+    fullName: "",
+    phone: "",
+    country: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
   const [cartTotal, setCartTotal] = useState(0);
@@ -36,38 +37,38 @@ const Checkout = () => {
 
     // Validate required fields
     if (!userDetails.fullName) {
-      formErrors.fullName = 'Full Name is required';
+      formErrors.fullName = "Full Name is required";
       isValid = false;
     }
 
     if (!userDetails.phone) {
-      formErrors.phone = 'Phone number is required';
+      formErrors.phone = "Phone number is required";
       isValid = false;
     } else if (!/^\d{10}$/.test(userDetails.phone)) {
-      formErrors.phone = 'Phone number should be 10 digits';
+      formErrors.phone = "Phone number should be 10 digits";
       isValid = false;
     }
 
     if (!userDetails.country) {
-      formErrors.country = 'Country is required';
+      formErrors.country = "Country is required";
       isValid = false;
     }
 
     if (!userDetails.city) {
-      formErrors.city = 'City is required';
+      formErrors.city = "City is required";
       isValid = false;
     }
 
     if (!userDetails.state) {
-      formErrors.state = 'State is required';
+      formErrors.state = "State is required";
       isValid = false;
     }
 
     if (!userDetails.zip) {
-      formErrors.zip = 'Zip Code is required';
+      formErrors.zip = "Zip Code is required";
       isValid = false;
     } else if (!/^\d{6}$/.test(userDetails.zip)) {
-      formErrors.zip = 'Zip Code should be 6 digits';
+      formErrors.zip = "Zip Code should be 6 digits";
       isValid = false;
     }
 
@@ -76,44 +77,40 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = async () => {
-    // Validate form before submission
-    if (!validateForm()) {
-      return; // Prevent form submission if validation fails
-    }
+    if (!validateForm()) return;
 
-    // Check if user is logged in
-    const token = localStorage.getItem('auth-token');
+    const token = localStorage.getItem("auth-token");
     if (!token) {
-      alert('Please log in to continue.');
-      navigate('/login'); // Redirect to LoginSignup page
-      return; // Prevent further execution
+      alert("Please log in to continue.");
+      navigate("/login");
+      return;
     }
 
-    const orderData = {
-      userDetails,
-      cartItems,
-    };
+    const orderData = { userDetails, cartItems };
 
     try {
-      const response = await fetch('http://localhost:4000/placeorder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': token, // Include the token in headers
-        },
-        body: JSON.stringify(orderData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/order/placeorder`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
 
       const result = await response.json();
       if (result.success) {
-        alert('Order placed successfully!');
-        console.log('Order placed:', result);
+        alert("Order placed successfully!");
+        navigate("/myorders", { state: { userDetails, cartItems } }); // Navigate to success page
       } else {
-        alert('Error placing order:', result.message);
+        alert("Error placing order:", result.message);
       }
     } catch (err) {
-      console.error('Error placing order:', err);
-      alert('Something went wrong, please try again later.');
+      console.error("Error placing order:", err);
+      alert("Something went wrong, please try again later.");
     }
   };
 
@@ -124,7 +121,7 @@ const Checkout = () => {
         {cartTotal > 0 ? (
           <>
             <div className="checkout-form">
-              <h2>Checkout</h2>
+              <h2>CHECKOUT</h2>
               <h3>Shipping Information</h3>
               <input
                 type="text"
@@ -188,33 +185,47 @@ const Checkout = () => {
             <div className="checkout-order-summary">
               <h3>Review your cart</h3>
               <div className="checkout-items">
-                {all_product.map((item) => (
-                  cartItems[item.id] > 0 && (
-                    <div key={item.id} className="checkout-item">
-                      <div className="item-image">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          style={{ width: '100px', borderRadius: '8px' }}
-                        />
+                {all_product.map(
+                  (item) =>
+                    cartItems[item.id] > 0 && (
+                      <div key={item.id} className="checkout-item">
+                        <div className="item-image">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            style={{ width: "100px", borderRadius: "8px" }}
+                          />
+                        </div>
+                        <div className="item-info">
+                          <p>
+                            {item.name} × {cartItems[item.id]}
+                          </p>
+                          <p>INR {item.new_price * cartItems[item.id]}</p>
+                        </div>
                       </div>
-                      <div className="item-info">
-                        <p>{item.name} × {cartItems[item.id]}</p>
-                        <p>INR {item.new_price * cartItems[item.id]}</p>
-                      </div>
-                    </div>
-                  )
-                ))}
+                    )
+                )}
               </div>
               <div className="checkout-summary">
-                <p>Subtotal: <span>INR {cartTotal}</span></p>
-                <p>Shipping: <span>INR 5.00</span></p>
-                <p>Discount: <span>-INR 10.00</span></p>
-                <h4>Total: <span>INR {(cartTotal + 5 - 10).toFixed(2)}</span></h4>
+                <p>
+                  Subtotal: <span>INR {cartTotal}</span>
+                </p>
+                <p>
+                  Shipping: <span>INR 5.00</span>
+                </p>
+                <p>
+                  Discount: <span>-INR 10.00</span>
+                </p>
+                <h4>
+                  Total: <span>INR {(cartTotal + 5 - 10).toFixed(2)}</span>
+                </h4>
               </div>
               <div className="secure-checkout">
                 <p>🔒 Secure Checkout – SSL Encrypted</p>
-                <small>Ensuring your financial and personal details are secure during every transaction.</small>
+                <small>
+                  Ensuring your financial and personal details are secure during
+                  every transaction.
+                </small>
               </div>
             </div>
           </>

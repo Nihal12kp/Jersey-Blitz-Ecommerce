@@ -1,117 +1,162 @@
 /* Root variables for easy customization */
 :root {
-    --primary-color: #4c56af;
-    --secondary-color: #f0f0f0;
-    --hover-color: #4c56af;
-    --border-color: #e0e0e0;
-    --input-bg: #fff;
-    --input-focus-border: #4CAF50;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Container styling */
+  --primary-color: #4c56af;
+  --secondary-color: #f0f0f0;
+  --hover-color: #4c56af;
+  --border-color: #e0e0e0;
+  --input-bg: #fff;
+  --input-focus-border: #4CAF50;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Container styling */
+.addproduct {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--secondary-color);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+/* General field styling */
+.addproduct-itemfield, .addproduct-itemfeild {
+  margin-bottom: 20px;
+}
+
+.addproduct-itemfield p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Input fields */
+.addproduct input[type="text"],
+.addproduct select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--input-bg);
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.addproduct input[type="text"]:focus,
+.addproduct select:focus {
+  outline: none;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 5px var(--input-focus-border);
+}
+
+/* Price fields side by side */
+.addproduct-price {
+  display: flex;
+  gap: 20px;
+}
+
+.addproduct-price .addproduct-itemfield {
+  flex: 1;
+}
+
+/* Select box styling */
+.addproduct select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Image upload area */
+.addproduct-thumnail-img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  cursor: pointer;
+  border: 2px dashed var(--border-color);
+  padding: 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.addproduct-thumnail-img:hover {
+  border-color: var(--primary-color);
+  background-color: #f8f8f8;
+}
+
+/* Button styling */
+.addproduct-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+.addproduct-btn:hover {
+  background: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.addproduct-btn:active {
+  transform: translateY(0);
+}
+
+/* ================= RESPONSIVE DESIGN ================== */
+
+/* Tablets */
+@media (max-width: 768px) {
   .addproduct {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background: var(--secondary-color);
-    border-radius: 12px;
-    box-shadow: var(--box-shadow);
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  /* General field styling */
-  .addproduct-itemfield, .addproduct-itemfeild {
-    margin-bottom: 20px;
-  }
-  
-  .addproduct-itemfield p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  
-  /* Input fields */
-  .addproduct input[type="text"], 
-  .addproduct select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--input-bg);
-    font-size: 14px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-  }
-  
-  .addproduct input[type="text"]:focus, 
-  .addproduct select:focus {
-    outline: none;
-    border-color: var(--input-focus-border);
-    box-shadow: 0 0 5px var(--input-focus-border);
-  }
-  
-  /* Price fields side by side */
-  .addproduct-price {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .addproduct-price .addproduct-itemfield {
-    flex: 1;
-  }
-  
-  /* Select box styling */
-  .addproduct select {
-    background-color: #fff;
-    cursor: pointer;
-  }
-  
-  /* Image upload area */
-  .addproduct-thumnail-img {
-    width: 100%;
-    max-width: 150px;
-    height: auto;
-    cursor: pointer;
-    border: 2px dashed var(--border-color);
     padding: 20px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    margin: 30px 20px;
   }
-  
-  .addproduct-thumnail-img:hover {
-    border-color: var(--primary-color);
-    background-color: #f8f8f8;
+
+  .addproduct-price {
+    flex-direction: column;
+    gap: 15px;
   }
-  
-  /* Button styling */
+
+  .addproduct input[type="text"],
+  .addproduct select {
+    font-size: 15px;
+  }
+
   .addproduct-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
+    font-size: 15px;
   }
-  
-  .addproduct-btn:hover {
-    background: var(--hover-color);
-    transform: translateY(-2px);
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .addproduct {
+    padding: 20px 15px;
+    margin: 20px 10px;
   }
-  
-  .addproduct-btn:active {
-    transform: translateY(0);
+
+  .addproduct-itemfield p {
+    font-size: 15px;
   }
-  
-  /* Responsive design
-  @media (max-width: 768px) {
-    .addproduct-price {
-      flex-direction: column;
-    }
-  } */
-  
+
+  .addproduct input[type="text"],
+  .addproduct select {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .addproduct-thumnail-img {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .addproduct-btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

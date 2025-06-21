@@ -1,0 +1,161 @@
+/* Base Styles */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('/logo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-login-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.barca-logo {
+  width: 90px;
+  margin-bottom: 18px;
+  filter: invert(1) drop-shadow(0 2px 6px rgba(255, 255, 255, 0.4));
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease, background 0.3s ease;
+}
+
+input::placeholder {
+  color: #555;
+}
+
+input:focus {
+  border: 1px solid #4a90e2;
+  background: #ffffff;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #357abd;
+}
+
+/* ========== Responsive Styles ========== */
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .login-card {
+    max-width: 90%;
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input {
+    font-size: 13.5px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+  }
+
+  .barca-logo {
+    width: 75px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  input {
+    font-size: 13px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+  }
+
+  .barca-logo {
+    width: 65px;
+  }
+}
+
+/* Ultra small devices */
+@media (max-width: 360px) {
+  .login-card {
+    padding: 16px;
+  }
+
+  input {
+    padding: 10px;
+  }
+
+  .login-btn {
+    padding: 8px 0;
+  }
+}

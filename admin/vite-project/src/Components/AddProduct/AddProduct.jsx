@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './AddProduct.css';
-import upload_area from '../../assets/upload_area.svg';
+import React, { useState } from "react";
+import "./AddProduct.css";
+import upload_area from "../../assets/upload_area.svg";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
@@ -9,7 +9,7 @@ const AddProduct = () => {
     category: "",
     new_price: "",
     old_price: "",
-    image: "" // To store the image URL after uploading
+    image: "", // To store the image URL after uploading
   });
 
   const imageHandler = (e) => {
@@ -25,79 +25,91 @@ const AddProduct = () => {
 
   const Add_Product = async () => {
     try {
-        // Validate that all fields are filled
-        if (!productDetails.name || !productDetails.category || !productDetails.new_price || !productDetails.old_price || !image) {
-            alert("Please fill all fields and upload an image.");
-            return;
+      // Validate that all fields are filled
+      if (
+        !productDetails.name ||
+        !productDetails.category ||
+        !productDetails.new_price ||
+        !productDetails.old_price ||
+        !image
+      ) {
+        alert("Please fill all fields and upload an image.");
+        return;
+      }
+
+      // Upload image first
+      const formData = new FormData();
+      formData.append("product", image);
+
+      const uploadResponse = await fetch(
+       `http://localhost:4000/upload`,
+        {
+          method: "POST",
+          body: formData,
         }
+      );
 
-        // Upload image first
-        const formData = new FormData();
-        formData.append('product', image);
+      if (!uploadResponse.ok) {
+        const errorResponse = await uploadResponse.json();
+        throw new Error(`Image upload failed: ${errorResponse.message}`);
+      }
 
-        const uploadResponse = await fetch('http://localhost:4000/upload', {
-            method: 'POST',
-            body: formData,
+      const uploadData = await uploadResponse.json();
+
+      // Prepare product details
+      const updatedProductDetails = {
+        ...productDetails,
+        image: uploadData.image_url, // Set image URL from response
+      };
+
+      // Send product details to backend
+      const addResponse = await fetch(
+        `http://localhost:4000/product/addproduct`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProductDetails),
+        }
+      );
+
+      if (!addResponse.ok) {
+        const errorData = await addResponse.json();
+        throw new Error(`Failed to add product: ${errorData.error}`);
+      }
+
+      const addData = await addResponse.json();
+      if (addData.success) {
+        alert("Product Added Successfully!");
+        // Reset form fields after successful product addition
+        setProductDetails({
+          name: "",
+          category: "awaykit",
+          new_price: "",
+          old_price: "",
+          image: "",
         });
-
-        if (!uploadResponse.ok) {
-            const errorResponse = await uploadResponse.json();
-            throw new Error(`Image upload failed: ${errorResponse.message}`);
-        }
-
-        const uploadData = await uploadResponse.json();
-
-        // Prepare product details
-        const updatedProductDetails = {
-            ...productDetails,
-            image: uploadData.image_url // Set image URL from response
-        };
-
-        // Send product details to backend
-        const addResponse = await fetch('http://localhost:4000/addproduct', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedProductDetails),
-        });
-
-        if (!addResponse.ok) {
-            const errorData = await addResponse.json();
-            throw new Error(`Failed to add product: ${errorData.error}`);
-        }
-
-        const addData = await addResponse.json();
-        if (addData.success) {
-            alert("Product Added Successfully!");
-            // Reset form fields after successful product addition
-            setProductDetails({
-                name: "",
-                category: "awaykit",
-                new_price: "",
-                old_price: "",
-                image: ""
-            });
-            setImage(null); // Clear the image preview
-        } else {
-            alert("Failed to add product.");
-        }
+        setImage(null); // Clear the image preview
+      } else {
+        alert("Failed to add product.");
+      }
     } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred: " + error.message);
+      console.error("Error:", error);
+      alert("An error occurred: " + error.message);
     }
-};
+  };
 
   return (
-    <div className='addproduct'>
+    <div className="addproduct">
       <div className="addproduct-itemfield">
         <p>Product Title</p>
         <input
           value={productDetails.name}
           onChange={changeHandler}
-          type='text'
-          name='name'
-          placeholder='Type here'
+          type="text"
+          name="name"
+          placeholder="Type here"
         />
       </div>
       <div className="addproduct-price">
@@ -106,9 +118,9 @@ const AddProduct = () => {
           <input
             value={productDetails.old_price}
             onChange={changeHandler}
-            type='text'
-            name='old_price'
-            placeholder='Type here'
+            type="text"
+            name="old_price"
+            placeholder="Type here"
           />
         </div>
         <div className="addproduct-itemfield">
@@ -116,9 +128,9 @@ const AddProduct = () => {
           <input
             value={productDetails.new_price}
             onChange={changeHandler}
-            type='text'
-            name='new_price'
-            placeholder='Type here'
+            type="text"
+            name="new_price"
+            placeholder="Type here"
           />
         </div>
       </div>
@@ -128,8 +140,8 @@ const AddProduct = () => {
         <select
           value={productDetails.category}
           onChange={changeHandler}
-          name='category'
-          className='add-product-selector'
+          name="category"
+          className="add-product-selector"
         >
           <option value="homekit">Home Kit</option>
           <option value="awaykit">Away Kit</option>
@@ -138,17 +150,25 @@ const AddProduct = () => {
       </div>
 
       <div className="addproduct-itemfield">
-        <label htmlFor='file-input'>
+        <label htmlFor="file-input">
           <img
             src={image ? URL.createObjectURL(image) : upload_area}
-            className='addproduct-thumbnail-img'
-            alt=''
+            className="addproduct-thumbnail-img"
+            alt=""
           />
         </label>
-        <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
+        <input
+          onChange={imageHandler}
+          type="file"
+          name="image"
+          id="file-input"
+          hidden
+        />
       </div>
 
-      <button onClick={Add_Product} className='addproduct-btn'>Add</button>
+      <button onClick={Add_Product} className="addproduct-btn">
+        Add
+      </button>
     </div>
   );
 };

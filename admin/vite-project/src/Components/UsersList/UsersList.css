@@ -1,97 +1,153 @@
-/* UsersList.css */
+/* ========== Base Styles ========== */
 
 .users-list {
-    width: 80%;
-    margin: 40px auto;
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.users-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #444;
+}
+
+.error {
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ========== Table Styles ========== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+thead {
+  background-color: #4c56af;
+  color: #fff;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #e9f5e9;
+}
+
+td {
+  color: #555;
+}
+
+/* ========== Button Styles ========== */
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  background-color: #4c56af;
+  color: white;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button.banned {
+  background-color: #d9534f;
+}
+
+button.unbanned {
+  background-color: #4c56af;
+}
+
+button.banned:hover {
+  background-color: #c9302c;
+}
+
+button.unbanned:hover {
+  background-color: #388e3c;
+}
+
+/* ========== Responsive Design ========== */
+
+/* Tablets (medium screens) */
+@media (max-width: 768px) {
+  .users-list {
+    width: 90%;
+    padding: 15px;
   }
-  
+
   .users-list h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-    color: #444;
+    font-size: 1.5em;
   }
-  
-  .error {
-    color: #d9534f;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  thead {
-    background-color:#4c56af;
-    color: #fff;
-  }
-  
+
   th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    font-size: 0.95em;
   }
-  
-  th {
-    font-weight: bold;
-  }
-  
-  tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  tbody tr:hover {
-    background-color: #e9f5e9;
-  }
-  
-  td {
-    color: #555;
-  }
-  
+
   button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 0.85em;
+    padding: 6px 12px;
+  }
+}
+
+/* Mobile (small screens) */
+@media (max-width: 480px) {
+  .users-list {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .users-list h2 {
+    font-size: 1.3em;
+  }
+
+  /* Make table scrollable horizontally */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 6px;
+  }
+
+  th, td {
     font-size: 0.9em;
-    transition: background-color 0.3s ease;
+    padding: 8px;
+    white-space: nowrap;
   }
-  
-  button:focus {
-    outline: none;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
+
   button {
-    background-color: #4c56af;
-    color: white;
+    font-size: 0.8em;
+    padding: 5px 10px;
   }
-  
-  button.banned {
-    background-color: #d9534f;
-  }
-  
-  button.unbanned {
-    background-color:#4c56af;
-  }
-  
-  button.banned:hover {
-    background-color: #c9302c;
-  }
-  
-  button.unbanned:hover {
-    background-color: #388e3c;
-  }
-  
+}

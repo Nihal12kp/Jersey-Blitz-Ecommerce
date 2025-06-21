@@ -1,4 +1,20 @@
-.admin{
-    display: flex;
-    
+.admin {
+  display: flex;
+  flex-direction: row; /* Default: side-by-side (e.g., sidebar + content) */
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .admin {
+    flex-direction: column; /* Stack vertically */
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .admin {
+    flex-direction: column;
+    padding: 10px;
+    gap: 15px;
+  }
 }

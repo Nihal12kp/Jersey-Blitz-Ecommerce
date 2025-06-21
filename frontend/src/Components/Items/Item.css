@@ -1,29 +1,85 @@
-.item{
-    width: 350px;
+.item {
+  width: 350px;
+  transition: transform 0.6s;
 }
-.item p{
-    margin: 6px 0px;
 
+.item p {
+  margin: 6px 0px;
 }
-.item-prices{
-    display: flex;
-    gap: 20px;
 
+.item-prices {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
-.item-price-new{
-    color: #374151;
-    font-size: 18px;
-    font-weight: 600;
 
+.item-price-new {
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
 }
-.item-price-old{
-    color: #8c8c8c;
-    font-size: 18px;
-    font-weight: 500;
-    text-decoration: line-through;
 
+.item-price-old {
+  color: #8c8c8c;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: line-through;
 }
-.item :hover{
-    transform: scale(1.05);
-    transition: 0.6s;
+
+/* Hover effect */
+.item:hover {
+  transform: scale(1.05);
+}
+
+/* ============================
+   RESPONSIVE STYLES
+============================ */
+
+/* Tablets and small desktops */
+@media (max-width: 1024px) {
+  .item {
+    width: 300px;
+  }
+
+  .item-price-new,
+  .item-price-old {
+    font-size: 16px;
+  }
+}
+
+/* Mobile and small tablets */
+@media (max-width: 768px) {
+  .item {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .item-price-new,
+  .item-price-old {
+    font-size: 15px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .item {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px;
+  }
+
+  .item p {
+    font-size: 14px;
+  }
+
+  .item-price-new,
+  .item-price-old {
+    font-size: 14px;
+  }
+
+  /* Optional: Disable hover scale effect on very small screens to prevent layout shift */
+  .item:hover {
+    transform: none;
+  }
 }
