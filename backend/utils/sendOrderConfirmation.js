@@ -10,8 +10,8 @@ dotenv.config();
 // ✅ Fix for ES Modules (__dirname)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename + "/utils");
-console.log("EMAIL:", process.env.SMTP_EMAIL);
-console.log("PASS:", process.env.SMTP_PASSWORD);
+// console.log("EMAIL:", process.env.SMTP_EMAIL);
+// console.log("PASS:", process.env.SMTP_PASSWORD);
 
 // ✅ Mail transporter config
 const transporter = nodemailer.createTransport({

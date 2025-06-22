@@ -11,7 +11,7 @@ export const allproduct = async (req, res) => {
 export const newcollection = async (req, res) => {
   let products = await Product.find({});
   let newcollection = products.slice(1).slice(-8);
-  console.log("New collection fetched");
+  // console.log("New collection fetched");
   res.send(newcollection);
 };
 
@@ -20,7 +20,7 @@ export const popular = async (req, res) => {
   try {
     let products = await Product.find({ category: "classickit" });
     let popular_in_classickit = products.slice(0, 4);
-    console.log("Popular in classickit fetched");
+    // console.log("Popular in classickit fetched");
     res.send(popular_in_classickit);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -34,7 +34,7 @@ export const relatedproduct = async (req, res) => {
     // Fetch 4 random products
     const relatedProducts = await Product.aggregate([{ $sample: { size: 4 } }]);
 
-    console.log("Random related products fetched");
+    // console.log("Random related products fetched");
     res.json(relatedProducts); // Send the products as JSON response
   } catch (error) {
     console.error("Error fetching related products:", error);
@@ -77,7 +77,7 @@ export const searchproduct = async (req, res) => {
 
 // Endpoint for adding products to cart
 export const addCart = async (req, res) => {
-  console.log("added", req.body.itemId);
+  // console.log("added", req.body.itemId);
   let userData = await User.findOne({ _id: req.user.id });
   userData.cartData[req.body.itemId] += 1;
   await User.findOneAndUpdate(
@@ -89,7 +89,7 @@ export const addCart = async (req, res) => {
 
 //   endpoint for removing product
 export const removecart = async (req, res) => {
-  console.log("removed", req.body.itemId);
+  // console.log("removed", req.body.itemId);
   let userData = await User.findOne({ _id: req.user.id });
 
   if (userData.cartData[req.body.itemId] > 0)
@@ -103,7 +103,7 @@ export const removecart = async (req, res) => {
 
 //  creating endpoint to get cartdata
 export const getcart = async (req, res) => {
-  console.log("GetCart");
+  // console.log("GetCart");
   let userData = await User.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 };
