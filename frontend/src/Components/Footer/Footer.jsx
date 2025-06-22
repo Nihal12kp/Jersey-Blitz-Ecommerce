@@ -3,9 +3,10 @@ import "./Footer.css";
 import logo from "../Assets/New_logo.png";
 import instagram_icon from "../Assets/instagram_icon.png";
 import watsaap_icon from "../Assets/whatsapp_icon.png";
-function Footer() {
+function Footer({ minHeight }) {
+  const dynamicStyle = minHeight ? { minHeight } : {};
   return (
-    <div className="footer">
+    <div className="footer" style={dynamicStyle}>
       <div className="footer-logo">
         <img src={logo} alt="" />
         <p>JERSEY BLITZ</p>

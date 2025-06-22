@@ -48,7 +48,7 @@ const SearchList = () => {
           <div className="search-results">
             {searchResults.map((product) => (
               <div key={product._id} className="search-item">
-                <Link to={`/product/${product.id}`} className="product-link">
+                <Link to={`/product/${product.slug}/${product.id}`} className="product-link">
                   <img
                     src={product.image}
                     alt={product.name}

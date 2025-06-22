@@ -77,6 +77,8 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = async () => {
+    console.log("URL:", `${process.env.REACT_APP_SERVER_URL}/order/placeorder`);
+
     if (!validateForm()) return;
 
     const token = localStorage.getItem("auth-token");
@@ -89,7 +91,8 @@ const Checkout = () => {
     const orderData = { userDetails, cartItems };
 
     try {
-      const response = await fetch(
+      // Step 1: Send order data to backend to create Razorpay order
+      const res = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/order/placeorder`,
         {
           method: "POST",
@@ -101,16 +104,68 @@ const Checkout = () => {
         }
       );
 
-      const result = await response.json();
-      if (result.success) {
-        alert("Order placed successfully!");
-        navigate("/myorders", { state: { userDetails, cartItems } }); // Navigate to success page
-      } else {
-        alert("Error placing order:", result.message);
+      const data = await res.json();
+
+      if (!data.success) {
+        alert("Error placing order: " + data.message);
+        return;
       }
+
+      // Step 2: Initialize Razorpay with order details
+      const options = {
+        key: data.razorpayKey, // From backend (process.env.RAZORPAY_KEY_ID)
+        amount: data.amount, // Amount in paise
+        currency: data.currency,
+        name: "Your Shop Name",
+        description: "Order Payment",
+        order_id: data.razorpayOrderId, // Razorpay order ID from backend
+        handler: async function (response) {
+          // Step 3: Verify payment with backend
+          try {
+            const verifyRes = await fetch(
+              `${process.env.REACT_APP_SERVER_URL}/order/verify`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "auth-token": token,
+                },
+                body: JSON.stringify({
+                  razorpayOrderId: response.razorpay_order_id,
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpaySignature: response.razorpay_signature,
+                  orderId: data.orderId, // From backend
+                }),
+              }
+            );
+
+            const verifyData = await verifyRes.json();
+            console.log(verifyData);
+
+            if (verifyData.success) {
+              alert("Payment successful & order confirmed!");
+              navigate("/myorders");
+            } else {
+              alert("Payment succeeded, but verification failed.");
+            }
+          } catch (err) {
+            console.error("Verification error:", err);
+            alert("Error verifying payment.");
+          }
+        },
+        prefill: {
+          name: userDetails.fullName,
+          email: "example@example.com",
+          contact: userDetails.phone,
+        },
+        theme: { color: "#3399cc" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (err) {
-      console.error("Error placing order:", err);
-      alert("Something went wrong, please try again later.");
+      console.error("Error placing order CATCH:", err);
+      alert("Something went wrong. Try again.");
     }
   };
 

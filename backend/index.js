@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import adminRoutes from "./routes/admin.routes.js"
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use("/auth", userRoutes);
 app.use("/product", productRoutes);
 app.use("/order", orderRoutes);
+app.use("/admin", adminRoutes);
 
 // Database Connection with MongoDB
 mongoose
@@ -63,26 +65,11 @@ app.post("/upload", upload.single('product'), async (req, res) => {
 });
 
 
-
-//   Endpoint to get order
-// app.get('/getproduct//:slug/:productId', async (req, res) => {
-//     const { productId } = req.params;
-
-//     try {
-//       // Find the product by productId
-//       const product = await Product.findOne({ _id: productId });
-
-//       if (!product) {
-//         return res.status(404).json({ success: false, message: 'Product not found' });
-//       }
-
-//       res.json({ success: true, product });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ success: false, message: 'Error retrieving the product.' });
-//     }
-//   });
-
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log("📦 Route:", r.route.path, Object.keys(r.route.methods));
+  }
+});
 // Start the server
 app.listen(port, (error) => {
   if (!error) {

@@ -56,33 +56,3 @@ export const signup = async (req, res) => {
   const token = jwt.sign(data, "secret_ecom");
   res.json({ success: true, token });
 };
-
-// Toggle user banned status (admin only)
-export const userban = async (req, res) => {
-  try {
-    const { isBanned } = req.body;
-    await User.findByIdAndUpdate(req.params.id, { isBanned });
-    res.json({
-      success: true,
-      message: `User ${isBanned ? "banned" : "unbanned"} successfully`,
-    });
-  } catch (err) {
-    res.status(500).json({ error: "Error updating user ban status" });
-  }
-};
-
-//   to get all users
-export const allusers = async (req, res) => {
-  try {
-    const users = await User.find(
-      {},
-      { name: 1, email: 1, cartData: 1, banned: 1 }
-    ); // Include banned status
-    res.json({ success: true, users });
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Error retrieving users." });
-  }
-};

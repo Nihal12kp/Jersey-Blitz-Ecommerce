@@ -14,10 +14,9 @@ const ListProduct = () => {
   });
 
   const fetchInfo = async () => {
-    const res = await fetch("http://localhost:4000/product/allproducts");
-    // console.log(`${process.env.REACT_APP_SERVER_URL}/product/allproducts`)
+    const res = await fetch("http://localhost:4000/admin/allproducts");
     const data = await res.json();
-    console.log(data)
+    // console.log(data);
     if (res.ok) {
       setAllproducts(data);
     }
@@ -27,8 +26,34 @@ const ListProduct = () => {
     fetchInfo();
   }, []);
 
+  // Toggle stock for a specific product
+  const toggleProductStock = async (productId) => {
+    try {
+      const res = await fetch(
+        `http://localhost:4000/admin/${productId}/toggle-stock`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const toggled = await res.json();
+
+      // Update local state (just update the toggled product)
+      setAllproducts((prev) =>
+        prev.map((p) => (p._id === toggled._id ? toggled : p))
+      );
+      fetchInfo();
+    } catch (err) {
+      console.error("Error updating stock:", err);
+    }
+  };
+
   const remove_product = async (productId) => {
-    await fetch(`http://localhost:4000/product/removeproduct`, {
+    // console.log("deleted");
+    await fetch(`http://localhost:4000/admin/removeproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -51,20 +76,17 @@ const ListProduct = () => {
   };
 
   const updateProduct = async () => {
-    const res = await fetch(
-      `http://localhost:4000/product/updateproduct`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          productId: selectedProduct._id,
-          updatedProduct,
-        }),
-      }
-    );
+    const res = await fetch(`http://localhost:4000/admin/updateproduct`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: selectedProduct._id,
+        updatedProduct,
+      }),
+    });
 
     if (res.ok) {
       fetchInfo();

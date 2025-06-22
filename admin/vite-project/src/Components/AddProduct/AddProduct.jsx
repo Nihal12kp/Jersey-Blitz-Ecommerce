@@ -41,13 +41,10 @@ const AddProduct = () => {
       const formData = new FormData();
       formData.append("product", image);
 
-      const uploadResponse = await fetch(
-       `http://localhost:4000/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const uploadResponse = await fetch(`http://localhost:4000/upload`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!uploadResponse.ok) {
         const errorResponse = await uploadResponse.json();
@@ -64,7 +61,7 @@ const AddProduct = () => {
 
       // Send product details to backend
       const addResponse = await fetch(
-        `http://localhost:4000/product/addproduct`,
+        `http://localhost:4000/admin/addproduct`,
         {
           method: "POST",
           headers: {

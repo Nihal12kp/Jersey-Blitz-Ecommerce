@@ -1,55 +1,85 @@
-.order-success-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.myorders-container {
+  padding: 2rem;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.orders-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.orders-table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.no-orders {
+  text-align: center;
+  color: #777;
+}
+
+.invoice-btn:hover {
+  background-color: #1e5fb4;
+}
+
+.invoice-icon {
+  font-size: 1rem;
+}
+
+.invoice-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 4px;
+  min-width: 120px; /* Optional fixed width for visual stability */
+  position: relative;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid #3f51b5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Hide/show without removing from DOM */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  position: static;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  .order-success-container h2 {
-    color: #28a745;
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .order-success-container p {
-    font-size: 16px;
-    color: #333;
-    margin: 5px 0;
-  }
-  
-  .order-success-container h3 {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #007bff;
-  }
-  
-  .order-success-container strong {
-    color: #000;
-  }
-  
-  .order-success-container button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .order-success-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  @media (max-width: 768px) {
-    .order-success-container {
-      width: 90%;
-      padding: 15px;
-    }
-  }
-  
+}
