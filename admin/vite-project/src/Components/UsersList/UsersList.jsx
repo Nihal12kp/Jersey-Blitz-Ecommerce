@@ -9,7 +9,7 @@ const UsersList = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("auth-token");
-        const response = await fetch(`http://localhost:4000/admin/users`, {
+        const response = await fetch(`${apiUrl}/admin/users`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const UsersList = () => {
   const handleBanUnban = async (userId, isBanned) => {
     try {
       const res = await fetch(
-        `http://localhost:4000/admin/user/${userId}/ban`,
+        `${apiUrl}/admin/user/${userId}/ban`,
         {
           method: "PUT",
           headers: {

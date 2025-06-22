@@ -3,6 +3,7 @@ import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
 
 const ListProduct = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [allproducts, setAllproducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({
@@ -14,7 +15,7 @@ const ListProduct = () => {
   });
 
   const fetchInfo = async () => {
-    const res = await fetch("http://localhost:4000/admin/allproducts");
+    const res = await fetch(`${apiUrl}/admin/allproducts`);
     const data = await res.json();
     // console.log(data);
     if (res.ok) {
@@ -30,7 +31,7 @@ const ListProduct = () => {
   const toggleProductStock = async (productId) => {
     try {
       const res = await fetch(
-        `http://localhost:4000/admin/${productId}/toggle-stock`,
+        `${apiUrl}/admin/${productId}/toggle-stock`,
         {
           method: "PUT",
           headers: {
@@ -53,7 +54,7 @@ const ListProduct = () => {
 
   const remove_product = async (productId) => {
     // console.log("deleted");
-    await fetch(`http://localhost:4000/admin/removeproduct`, {
+    await fetch(`${apiUrl}/admin/removeproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -76,7 +77,7 @@ const ListProduct = () => {
   };
 
   const updateProduct = async () => {
-    const res = await fetch(`http://localhost:4000/admin/updateproduct`, {
+    const res = await fetch(`${apiUrl}/admin/updateproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",

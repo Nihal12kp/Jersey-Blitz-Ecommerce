@@ -3,6 +3,8 @@ import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
 
 const AddProduct = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  console.log(apiUrl)
   const [image, setImage] = useState(null);
   const [productDetails, setProductDetails] = useState({
     name: "",
@@ -41,7 +43,7 @@ const AddProduct = () => {
       const formData = new FormData();
       formData.append("product", image);
 
-      const uploadResponse = await fetch(`http://localhost:4000/upload`, {
+      const uploadResponse = await fetch(`${apiUrl}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -61,7 +63,7 @@ const AddProduct = () => {
 
       // Send product details to backend
       const addResponse = await fetch(
-        `http://localhost:4000/admin/addproduct`,
+        `${apiUrl}/admin/addproduct`,
         {
           method: "POST",
           headers: {
