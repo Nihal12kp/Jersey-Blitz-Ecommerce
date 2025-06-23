@@ -1,6 +1,8 @@
 # Ignore node_modules folders
 **/node_modules/
 **/uploads/
+**/build/
+**/dist/
 # Ignore the api folder
 api/
 
