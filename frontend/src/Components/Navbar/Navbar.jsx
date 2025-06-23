@@ -4,7 +4,7 @@ import logo from "../Assets/New_logo.png";
 import cart_icon from "../Assets/cart_icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
-import { IoIosArrowDropdown } from "react-icons/io";
+// import { IoIosArrowDropdown } from "react-icons/io";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
@@ -16,10 +16,10 @@ const Navbar = () => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const isLoggedIn = !!localStorage.getItem("auth-token");
 
-  const dropdown_toggle = (e) => {
-    menuRef.current.classList.toggle("nav-menu-visible");
-    e.target.classList.toggle("open");
-  };
+  // const dropdown_toggle = (e) => {
+  //   menuRef.current.classList.toggle("nav-menu-visible");
+  //   e.target.classList.toggle("open");
+  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const Navbar = () => {
         <img src={logo} alt="logo" />
         <p>JERSEY BLITZ</p>
       </div>
-      <IoIosArrowDropdown className="nav-dropdown" onClick={dropdown_toggle} />
+      {/* <IoIosArrowDropdown className="nav-dropdown" onClick={dropdown_toggle} /> */}
       <div className="search">
         <form onSubmit={handleSearch}>
           <input

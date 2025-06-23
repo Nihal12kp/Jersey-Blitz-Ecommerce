@@ -16,7 +16,7 @@ const Checkout = () => {
     state: "",
     zip: "",
   });
-
+  const [loadingInvoiceId, setLoadingInvoiceId] = useState(null);
   const [cartTotal, setCartTotal] = useState(0);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate(); // Create navigate object for navigation
@@ -76,7 +76,8 @@ const Checkout = () => {
     return isValid;
   };
 
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async (pen) => {
+    setLoadingInvoiceId(pen);
     console.log("URL:", `${process.env.REACT_APP_SERVER_URL}/order/placeorder`);
 
     if (!validateForm()) return;
@@ -166,6 +167,8 @@ const Checkout = () => {
     } catch (err) {
       console.error("Error placing order CATCH:", err);
       alert("Something went wrong. Try again.");
+    } finally {
+      setLoadingInvoiceId(null);
     }
   };
 
@@ -232,8 +235,27 @@ const Checkout = () => {
               />
               {errors.zip && <p className="error">{errors.zip}</p>}
 
-              <button className="checkout-button" onClick={handlePlaceOrder}>
+              {/* <button className="checkout-button" onClick={handlePlaceOrder}>
                 Pay Now
+              </button> */}
+              <button
+                className="checkout-button"
+                onClick={() => handlePlaceOrder("pending")}
+                disabled={loadingInvoiceId === "pending"}
+                title="Pay Now"
+              >
+                <span
+                  className={`spinner ${
+                    loadingInvoiceId === "pending" ? "visible" : "hidden"
+                  }`}
+                ></span>
+                <span
+                  className={
+                    loadingInvoiceId === "pending" ? "hidden" : "visible"
+                  }
+                >
+                  Pay Now
+                </span>
               </button>
             </div>
 

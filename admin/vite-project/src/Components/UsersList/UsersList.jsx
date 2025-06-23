@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./UsersList.css";
 
 const UsersList = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 

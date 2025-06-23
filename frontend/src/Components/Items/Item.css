@@ -1,44 +1,74 @@
 .item {
-  width: 350px;
-  transition: transform 0.6s;
+  width: 100%;
+  max-width: 350px;
+  background-color: #ffffff;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s, box-shadow 0.4s;
+  text-align: center;
 }
 
-.item p {
-  margin: 6px 0px;
+.item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.item img.productimg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.item-title {
+  margin: 12px 0 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2c2c2c;
+  line-height: 1.4;
 }
 
 .item-prices {
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
   flex-wrap: wrap;
 }
 
 .item-price-new {
-  color: #374151;
+  color: #1f2937;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .item-price-old {
-  color: #8c8c8c;
-  font-size: 18px;
+  color: #9ca3af;
+  font-size: 16px;
   font-weight: 500;
   text-decoration: line-through;
-}
-
-/* Hover effect */
-.item:hover {
-  transform: scale(1.05);
 }
 
 /* ============================
    RESPONSIVE STYLES
 ============================ */
 
-/* Tablets and small desktops */
+/* Tablets */
 @media (max-width: 1024px) {
   .item {
-    width: 300px;
+    max-width: 300px;
+    padding: 12px;
+  }
+
+  .item img.productimg {
+    max-width: 280px;
+    max-height: 280px;
   }
 
   .item-price-new,
@@ -50,9 +80,16 @@
 /* Mobile and small tablets */
 @media (max-width: 768px) {
   .item {
-    width: 100%;
     max-width: 320px;
-    margin: 0 auto;
+  }
+
+  .item img.productimg {
+    max-width: 260px;
+    max-height: 260px;
+  }
+
+  .item-title {
+    font-size: 15px;
   }
 
   .item-price-new,
@@ -64,12 +101,16 @@
 /* Small Mobile */
 @media (max-width: 480px) {
   .item {
-    width: 100%;
-    max-width: 280px;
+    max-width: 260px;
     padding: 10px;
   }
 
-  .item p {
+  .item img.productimg {
+    max-width: 240px;
+    max-height: 240px;
+  }
+
+  .item-title {
     font-size: 14px;
   }
 
@@ -78,8 +119,8 @@
     font-size: 14px;
   }
 
-  /* Optional: Disable hover scale effect on very small screens to prevent layout shift */
   .item:hover {
     transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 }

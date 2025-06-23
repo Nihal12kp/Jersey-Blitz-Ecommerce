@@ -1,168 +1,195 @@
 /* Overall Checkout Container */
 .checkout-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f5f5f5;
-    font-family: 'Arial', sans-serif; /* Modern font */
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f5f5f5;
+  font-family: "Arial", sans-serif; /* Modern font */
 }
 
 /* Individual Sections */
-.checkout-form, 
+.checkout-form,
 .checkout-order-summary {
-    flex: 1; /* Allow sections to flex and grow */
-    background-color: #ffffff;
-    border-radius: 12px; /* More rounded corners */
-    padding: 30px; /* Increased padding for a more spacious look */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
-    margin: 0 15px; /* Spacing between columns */
+  flex: 1; /* Allow sections to flex and grow */
+  background-color: #ffffff;
+  border-radius: 12px; /* More rounded corners */
+  padding: 30px; /* Increased padding for a more spacious look */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+  margin: 0 15px; /* Spacing between columns */
 }
 
 /* Section Hover Effects */
-.checkout-form:hover, 
+.checkout-form:hover,
 .checkout-order-summary:hover {
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
 }
 
 /* Headings */
-h2, h3 {
-    margin-bottom: 20px; /* Increased margin for better spacing */
-    color: #333; /* Darker text color */
-    font-weight: bold; /* Make headings bold for emphasis */
+h2,
+h3 {
+  margin-bottom: 20px; /* Increased margin for better spacing */
+  color: #333; /* Darker text color */
+  font-weight: bold; /* Make headings bold for emphasis */
 }
 
 /* Form Group Styling */
 .form-group {
-    margin-bottom: 20px; /* Increased margin for better spacing */
+  margin-bottom: 20px; /* Increased margin for better spacing */
 }
 
 /* Label Styles */
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #555; /* Lighter text color */
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555; /* Lighter text color */
 }
 
 /* Input and Select Styling */
-input, select {
-    width: 100%;
-    padding: 12px; /* Increased padding for inputs */
-    border: 1px solid #ccc;
-    border-radius: 6px; /* Slightly more rounded corners */
-    font-size: 14px; /* Increased font size */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus */
+input,
+select {
+  width: 100%;
+  padding: 12px; /* Increased padding for inputs */
+  border: 1px solid #ccc;
+  border-radius: 6px; /* Slightly more rounded corners */
+  font-size: 14px; /* Increased font size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus */
 }
 
 /* Focus State */
-input:focus, 
+input:focus,
 select:focus {
-    border-color: #4A90E2; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Add subtle shadow on focus */
+  border-color: #4a90e2; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Add subtle shadow on focus */
 }
 
 /* Button Styling */
 .checkout-button {
-    width: 100%;
-    padding: 15px; /* Increased button padding */
-    background-color: #4A90E2;
-    color: #fff;
-    border: none;
-    border-radius: 6px; /* Slightly more rounded corners */
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  width: 100%;
+  padding: 15px; /* Increased button padding */
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 6px; /* Slightly more rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
 }
 
 /* Button Hover Effect */
 .checkout-button:hover {
-    background-color: #357ABD;
-    transform: scale(1.03); /* Slightly increase size on hover */
+  background-color: #357abd;
+  transform: scale(1.03); /* Slightly increase size on hover */
 }
 
 /* Order Summary Styles */
 .checkout-order-summary h3 {
-    margin-bottom: 20px; /* Increased margin for better spacing */
-    color: #333;
+  margin-bottom: 20px; /* Increased margin for better spacing */
+  color: #333;
 }
 
 /* Items and Summary Styling */
 .checkout-items {
-    border-top: 1px solid #ccc;
-    padding-top: 20px; /* Increased padding for a more spacious look */
-    margin-top: 15px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px; /* Increased padding for a more spacious look */
+  margin-top: 15px;
 }
 
 .checkout-summary {
-    border-top: 1px solid #ccc;
-    padding-top: 15px;
-    margin-top: 15px;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  margin-top: 15px;
 }
 
 /* Summary Item Styling */
 .checkout-summary p {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0; /* Increased margin for better spacing */
-    font-size: 16px; /* Consistent font size */
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0; /* Increased margin for better spacing */
+  font-size: 16px; /* Consistent font size */
 }
 
 /* Total Amount Styling */
 .checkout-summary h4 {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px; /* Increased margin for better spacing */
-    font-size: 18px;
-    font-weight: bold; /* Bold for total amount */
-    color: #333;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px; /* Increased margin for better spacing */
+  font-size: 18px;
+  font-weight: bold; /* Bold for total amount */
+  color: #333;
 }
 
 /* Secure Checkout Message */
 .secure-checkout {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #777; /* Lighter text for secure message */
-    text-align: center; /* Centered text */
+  margin-top: 20px;
+  font-size: 14px;
+  color: #777; /* Lighter text for secure message */
+  text-align: center; /* Centered text */
 }
 
 .secure-checkout small {
-    display: block; /* Ensures small text appears on a new line */
-    margin-top: 5px; /* Space above small text */
+  display: block; /* Ensures small text appears on a new line */
+  margin-top: 5px; /* Space above small text */
 }
 .checkout-item {
-    display: flex; /* Flex layout for items */
-    align-items: center; /* Center items vertically */
-    margin-bottom: 15px; /* Space between items */
+  display: flex; /* Flex layout for items */
+  align-items: center; /* Center items vertically */
+  margin-bottom: 15px; /* Space between items */
 }
 
 .item-image {
-    margin-right: 15px; /* Space between image and text */
+  margin-right: 15px; /* Space between image and text */
 }
 
 .item-info {
-    flex: 1; /* Allow text info to take remaining space */
+  flex: 1; /* Allow text info to take remaining space */
 }
 .error {
-    color: red;
-    font-size: 12px;
-    margin-top: 4px;
-  }
-  
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid #3f51b5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
+/* Hide/show without removing from DOM */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  position: static;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .checkout-container {
-        flex-direction: column; /* Stack columns on small screens */
-    }
+  .checkout-container {
+    flex-direction: column; /* Stack columns on small screens */
+  }
 
-    .checkout-form, 
-    .checkout-order-summary {
-        width: 100%; /* Full width for mobile */
-        margin: 10px 0; /* Vertical spacing */
-    }
+  .checkout-form,
+  .checkout-order-summary {
+    width: 100%; /* Full width for mobile */
+    margin: 10px 0; /* Vertical spacing */
+  }
 }

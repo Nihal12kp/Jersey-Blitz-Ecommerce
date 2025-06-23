@@ -82,7 +82,7 @@ export const addCart = async (req, res) => {
   userData.cartData[req.body.itemId] += 1;
   await User.findOneAndUpdate(
     { _id: req.user.id },
-    { cartData: userData.cartData }
+    { cartData: userData?.cartData }
   );
   res.send("Added");
 };
@@ -92,11 +92,11 @@ export const removecart = async (req, res) => {
   // console.log("removed", req.body.itemId);
   let userData = await User.findOne({ _id: req.user.id });
 
-  if (userData.cartData[req.body.itemId] > 0)
+  if (userData?.cartData[req.body.itemId] > 0)
     userData.cartData[req.body.itemId] -= 1;
   await User.findOneAndUpdate(
     { _id: req.user.id },
-    { cartData: userData.cartData }
+    { cartData: userData?.cartData }
   );
   res.send("Removed");
 };
@@ -105,7 +105,7 @@ export const removecart = async (req, res) => {
 export const getcart = async (req, res) => {
   // console.log("GetCart");
   let userData = await User.findOne({ _id: req.user.id });
-  res.json(userData.cartData);
+  res.json(userData?.cartData);
 };
 
 export const slugproduct = async (req, res) => {
