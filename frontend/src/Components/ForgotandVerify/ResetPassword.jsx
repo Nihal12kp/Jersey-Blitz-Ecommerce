@@ -1,5 +1,7 @@
 import "./commonfv.css";
 import { useState } from "react";
+import Navbar from "../Navbar/Navbar"
+import Footer from "../Footer/Footer"
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
@@ -41,7 +43,7 @@ export default function ResetPassword() {
     if (res.ok) {
       setMessage(data.message);
       setError("");
-      setTimeout(() => navigate("/auth"), 1500);
+      setTimeout(() => navigate("/login"), 1500);
     } else {
       setError(data.message || "Failed to reset password.");
       setMessage("");
@@ -49,6 +51,8 @@ export default function ResetPassword() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="fv-container">
       <div className="fv-card">
         <h2>Set New Password</h2>
@@ -86,5 +90,7 @@ export default function ResetPassword() {
         {error && <p className="fv-error">{error}</p>}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

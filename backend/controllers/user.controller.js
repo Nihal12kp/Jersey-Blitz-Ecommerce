@@ -1,9 +1,10 @@
 import User from "../models/userScema.js";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 
 const fdUrl = process.env.FD_URL || "";
-const JWT_SECRET = process.env.JWT_SECRET || "secret";
+const JWT_SECRET = process.env.JWT_SECRET || "secret_ecom";
 
 export const login = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
@@ -14,7 +15,10 @@ export const login = async (req, res) => {
     return res.json({ errors: "You are banned from logging in." });
   }
   if (user) {
-    const passVerify = req.body.password === user.password;
+    const passVerify = await bcrypt.compare(req.body.password, user.password);
+    if (!passVerify) {
+      return res.json({ message: "Username or Password is Incorrect! " });
+    }
     if (passVerify) {
       const data = {
         user: {
@@ -24,15 +28,16 @@ export const login = async (req, res) => {
       const token = jwt.sign(data, "secret_ecom");
       res.json({ success: true, token });
     } else {
-      res.json({ success: false, errors: "Wrong password" });
+      res.json({ success: false, errors: "Email or Password is incorrect" });
     }
   } else {
-    res.json({ success: false, errors: "Wrong email id" });
+    res.json({ success: false, errors: "Email or Password is incorrect" });
   }
 };
 
 // Creating end points for registering the user
 export const signup = async (req, res) => {
+  const password = req.body.password;
   let check = await User.findOne({ email: req.body.email });
   if (check) {
     return res
@@ -43,10 +48,16 @@ export const signup = async (req, res) => {
   for (let i = 0; i < 300; i++) {
     cart[i] = 0;
   }
+  if(password < 8){
+    return res
+      .status(400)
+      .json({ success: false, error: "Password should be atleast 8 character!" });
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
   const user = new User({
     name: req.body.username,
     email: req.body.email,
-    password: req.body.password,
+    password: hashedPassword,
     cartData: cart,
   });
   await user.save();
@@ -67,7 +78,7 @@ export const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "5m" });
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "10m" });
     const resetLink = `${fdUrl}/password-verify/${token}`;
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -81,7 +92,7 @@ export const forgotPassword = async (req, res) => {
       from: process.env.SMTP_EMAIL,
       to: email,
       subject: "Password Reset - Jersey Blitz",
-      html: `<p>Click <a href="${resetLink}">here</a> to reset your password. Link expires in 5 minutes.</p>`,
+      html: `<p>Click <a href="${resetLink}">here</a> to reset your password. Link expires in 10 minutes.</p>`,
     });
 
     res.json({ message: "Reset link sent to email." });
@@ -89,7 +100,7 @@ export const forgotPassword = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Something went wrong." });
   }
-}
+};
 
 export const resetPassword = async (req, res) => {
   const { token } = req.params;
@@ -97,6 +108,7 @@ export const resetPassword = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    console.log(decoded);
     const user = await User.findOne({ email: decoded.email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -109,4 +121,4 @@ export const resetPassword = async (req, res) => {
     console.error(err);
     res.status(400).json({ message: "Invalid or expired token." });
   }
-}
+};

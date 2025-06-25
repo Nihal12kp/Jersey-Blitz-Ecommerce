@@ -1,6 +1,7 @@
 import "./commonfv.css";
 import { useState } from "react";
-
+import Navbar from "../Navbar/Navbar"
+import Footer from "../Footer/Footer"
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -42,6 +43,8 @@ export default function ForgotPassword() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="fv-container">
       <div className="fv-card">
         <h2>Forgot Password</h2>
@@ -67,5 +70,7 @@ export default function ForgotPassword() {
         {error && <p className="fv-error">{error}</p>}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
