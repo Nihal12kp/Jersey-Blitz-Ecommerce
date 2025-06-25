@@ -11,6 +11,10 @@ import LoginSignup from "./Pages/LoginSignup";
 import Checkout from "./Components/Checkout/Checkout";
 import SearchList from "./Pages/SearchList";
 import MyOrders from "./Components/MyOrders/MyOrders";
+import ForgotPassword from "./Components/ForgotandVerify/ForgotPassword"
+import ResetPassword from "./Components/ForgotandVerify/ResetPassword"
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <div>
@@ -36,11 +40,14 @@ function App() {
           </Route>
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginSignup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/password-verify/:token" element={<ResetPassword />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/search" element={<SearchList />} />
           <Route path="/myorders" element={<MyOrders />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }

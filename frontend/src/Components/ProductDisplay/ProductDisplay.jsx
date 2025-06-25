@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./ProductDisplay.css";
+import toast from "react-hot-toast";
+
 import { ShopContext } from "../../Context/ShopContext";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
@@ -8,22 +10,25 @@ const ProductDisplay = ({ product }) => {
   const { addToCart } = useContext(ShopContext);
   const [selectedSize, setSelectedSize] = useState(null); // State to track the selected size
 
-  const handleAddToCart = () => {
-    if (!selectedSize) {
-      alert("Please select a size before adding to the cart.");
-      return;
-    }
+ const handleAddToCart = () => {
+  if (!selectedSize) {
+    toast.error("Please select a size before adding to the cart.");
+    return;
+  }
 
-    if (product && product.id) {
-      if (product.inStock) {
-        addToCart(product.id, selectedSize); // Pass the selected size to addToCart
-      } else {
-        alert("This product is out of stock and cannot be added to the cart.");
-      }
+  if (product && product.id) {
+    if (product.inStock) {
+      addToCart(product.id, selectedSize); // Call context function
+      // alert("Product added to cart."); 
+      toast.success("Product added to cart.")
     } else {
-      console.error("Product or Product ID is not available");
+      toast.error("This product is out of stock and cannot be added to the cart.");
     }
-  };
+  } else {
+    console.error("Product or Product ID is not available");
+  }
+};
+
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size); // Update the selected size state

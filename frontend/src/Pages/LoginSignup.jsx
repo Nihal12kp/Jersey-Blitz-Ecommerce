@@ -2,6 +2,7 @@ import "./CSS/SignUp.css"; // Assuming you have a combined CSS file
 import Navbar from "../Components/Navbar/Navbar";
 import { useState } from "react";
 import Footer from "../Components/Footer/Footer";
+import { Link } from "react-router-dom";
 
 export const LoginSignup = () => {
   const [state, setState] = useState("Login");
@@ -138,7 +139,7 @@ export const LoginSignup = () => {
 
             <button type="submit">Continue</button>
           </form>
-
+          <Link to="/forgotpassword">Forgot Password?</Link>
           {state === "Sign Up" ? (
             <p className="loginsignup-login">
               Already have an account?
