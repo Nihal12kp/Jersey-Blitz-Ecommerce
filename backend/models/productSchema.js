@@ -41,14 +41,7 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    sizes: [
-      {
-        size: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    sizes: [String],
     date: {
       type: Date,
       default: Date.now,

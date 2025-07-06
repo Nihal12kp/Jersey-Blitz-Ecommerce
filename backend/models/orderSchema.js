@@ -14,11 +14,11 @@ const orderSchema = new mongoose.Schema(
         productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: Number,
         price: Number,
+        sizes: [String]
       },
     ],
 
     totalAmount: { type: Number, required: true },
-
     // Razorpay integration fields
     razorpayOrderId: { type: String }, // Generated when order is created
     razorpayPaymentId: { type: String }, // Captured on payment success

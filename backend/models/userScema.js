@@ -14,6 +14,7 @@ const userSchema = new schema({
   },
   cartData: {
     type: Object,
+    default: {},
   },
   date: {
     type: Date,

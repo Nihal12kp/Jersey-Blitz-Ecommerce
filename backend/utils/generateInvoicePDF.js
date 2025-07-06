@@ -32,6 +32,7 @@ export const generateInvoicePDF = async (order) => {
       items: order.cartItems.map((item, index) => ({
         index: index + 1,
         name: item.productId?.name || "N/A",
+        sizes: Array.isArray(item.sizes) ? item.sizes.join(", ") : item.sizes || "N/A",
         quantity: item.quantity,
         price: item.productId?.new_price || 0,
         total: item.quantity * (item.productId?.new_price || 0),

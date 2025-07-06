@@ -99,13 +99,18 @@ const MyOrders = () => {
                 {orders.map((order, index) => {
                   const date = new Date(order.createdAt).toLocaleDateString();
                   const total = order.totalAmount;
-                  
 
                   return (
                     <tr key={order._id}>
                       <td>{index + 1}</td>
                       <td>{date}</td>
-                      <td>{order.cartItems.length}</td>
+                      <td>
+                        {order.cartItems.reduce(
+                          (total, item) => total + item.quantity,
+                          0
+                        )}{" "}                        
+                      </td>
+
                       <td>₹{total}</td>
                       <td>
                         <button

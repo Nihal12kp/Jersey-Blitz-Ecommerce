@@ -5,6 +5,7 @@ import cross_icon from "../../assets/cross_icon.png";
 const ListProduct = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [allproducts, setAllproducts] = useState([]);
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({
     name: "",
@@ -30,15 +31,12 @@ const ListProduct = () => {
   // Toggle stock for a specific product
   const toggleProductStock = async (productId) => {
     try {
-      const res = await fetch(
-        `${apiUrl}/admin/${productId}/toggle-stock`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`${apiUrl}/admin/${productId}/toggle-stock`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const toggled = await res.json();
 
@@ -64,7 +62,18 @@ const ListProduct = () => {
     });
     fetchInfo();
   };
+  const handleSizeChange = (size) => {
+    const currentSizes = updatedProduct.sizes || [];
 
+    const updatedSizes = currentSizes.includes(size)
+      ? currentSizes.filter((s) => s !== size)
+      : [...currentSizes, size];
+
+    setUpdatedProduct((prev) => ({
+      ...prev,
+      sizes: updatedSizes,
+    }));
+  };
   const handleUpdateProduct = (product) => {
     setSelectedProduct(product);
     setUpdatedProduct({
@@ -99,7 +108,7 @@ const ListProduct = () => {
 
   return (
     <div className="listproduct">
-      <h1>All Product List</h1>
+      <h1>All Product List - Total : {allproducts.length}</h1>
       <div className="listproduct-format-main">
         <p>Products</p>
         <p>Title</p>
@@ -208,6 +217,18 @@ const ListProduct = () => {
                 })
               }
             />
+            <label>Sizes:</label>
+            {["S", "M", "L", "XL", "XXL"].map((size) => (
+              <label key={size}>
+                <input
+                  type="checkbox"
+                  checked={updatedProduct.sizes?.includes(size)}
+                  onChange={() => handleSizeChange(size)}
+                />
+                {size}
+              </label>
+            ))}
+
             <button onClick={updateProduct}>Update</button>
             <button onClick={() => setSelectedProduct(null)}>Cancel</button>
           </div>

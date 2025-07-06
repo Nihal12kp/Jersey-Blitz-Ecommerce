@@ -45,9 +45,7 @@ export const signup = async (req, res) => {
       .json({ success: false, error: "existing user found with same email" });
   }
   let cart = {};
-  for (let i = 0; i < 300; i++) {
-    cart[i] = 0;
-  }
+  
   if(password < 8){
     return res
       .status(400)

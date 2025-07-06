@@ -78,7 +78,7 @@ const Checkout = () => {
 
   const handlePlaceOrder = async (pen) => {
     setLoadingInvoiceId(pen);
-    console.log("URL:", `${process.env.REACT_APP_SERVER_URL}/order/placeorder`);
+    // console.log("URL:", `${process.env.REACT_APP_SERVER_URL}/order/placeorder`);
 
     if (!validateForm()) return;
 
@@ -262,39 +262,45 @@ const Checkout = () => {
             <div className="checkout-order-summary">
               <h3>Review your cart</h3>
               <div className="checkout-items">
-                {all_product.map(
-                  (item) =>
-                    cartItems[item.id] > 0 && (
-                      <div key={item.id} className="checkout-item">
-                        <div className="item-image">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            style={{ width: "100px", borderRadius: "8px" }}
-                          />
-                        </div>
-                        <div className="item-info">
-                          <p>
-                            {item.name} × {cartItems[item.id]}
-                          </p>
-                          <p>INR {item.new_price * cartItems[item.id]}</p>
-                        </div>
+                {Object.entries(cartItems).map(([itemId, itemData]) => {
+                  if (!itemData || itemData.quantity === 0) return null;
+
+                  const item = all_product.find(
+                    (prod) => prod.id.toString() === itemId
+                  );
+                  if (!item) return null;
+
+                  return (
+                    <div key={itemId} className="checkout-item">
+                      <div className="item-image">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          style={{ width: "100px", borderRadius: "8px" }}
+                        />
                       </div>
-                    )
-                )}
+                      <div className="item-info">
+                        <p>{item.name}</p>
+                        <p>Quantity: {itemData.quantity}</p>
+                        <p>Sizes: {itemData.sizes.join(", ")}</p>
+                        <p>Total: INR {item.new_price * itemData.quantity}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <div className="checkout-summary">
                 <p>
                   Subtotal: <span>INR {cartTotal}</span>
                 </p>
                 <p>
-                  Shipping: <span>INR 5.00</span>
+                  Shipping: <span>INR 0.00</span>
                 </p>
                 <p>
-                  Discount: <span>-INR 10.00</span>
+                  Discount: <span>INR .00</span>
                 </p>
                 <h4>
-                  Total: <span>INR {(cartTotal + 5 - 10).toFixed(2)}</span>
+                  Total: <span>INR {(cartTotal).toFixed(2)}</span>
                 </h4>
               </div>
               <div className="secure-checkout">

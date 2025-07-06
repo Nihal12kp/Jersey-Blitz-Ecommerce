@@ -13,6 +13,7 @@ import SearchList from "./Pages/SearchList";
 import MyOrders from "./Components/MyOrders/MyOrders";
 import ForgotPassword from "./Components/ForgotandVerify/ForgotPassword"
 import ResetPassword from "./Components/ForgotandVerify/ResetPassword"
+import ErrorPage from "./Components/ErrorPage/ErrorPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/search" element={<SearchList />} />
           <Route path="/myorders" element={<MyOrders />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster />

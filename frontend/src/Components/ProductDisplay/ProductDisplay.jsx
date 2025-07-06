@@ -15,7 +15,7 @@ const ProductDisplay = ({ product }) => {
     toast.error("Please select a size before adding to the cart.");
     return;
   }
-
+  // console.log(selectedSize);
   if (product && product.id) {
     if (product.inStock) {
       addToCart(product.id, selectedSize); // Call context function
@@ -82,7 +82,8 @@ const ProductDisplay = ({ product }) => {
         <div className="productdisplay-right-size">
           <h1>Select size</h1>
           <div className="productdisplay-right-sizes">
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
+
+            {product.sizes.length ===0 ? "Out of Stocks" : (product.sizes || []).map((size) => (
               <div
                 key={size}
                 className={`size-option ${
@@ -108,7 +109,7 @@ const ProductDisplay = ({ product }) => {
         {/* Disable Add to Cart button if out of stock */}
         <button
           onClick={handleAddToCart}
-          disabled={!product.inStock || !selectedSize} // Disable if out of stock or no size selected
+          disabled={!product.inStock || !selectedSize || product.sizes.length === 0} // Disable if out of stock or no size selected
         >
           ADD TO CART
         </button>

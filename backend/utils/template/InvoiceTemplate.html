@@ -12,8 +12,6 @@
         max-width: 800px;
         margin: auto;
         padding: 30px;
-        /* border: 1px solid #eee; */
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
         font-size: 16px;
         line-height: 24px;
         color: #555;
@@ -22,6 +20,7 @@
         width: 100%;
         line-height: inherit;
         text-align: left;
+        border-collapse: collapse;
       }
       .invoice-box table td {
         padding: 5px;
@@ -35,7 +34,7 @@
       .invoice-box table tr.item td {
         border-bottom: 1px solid #eee;
       }
-      .invoice-box table tr.total td:nth-child(2) {
+      .invoice-box table tr.total td {
         border-top: 2px solid #eee;
         font-weight: bold;
       }
@@ -53,16 +52,19 @@
         <tr class="heading">
           <td>Item</td>
           <td>Qty</td>
+          <td>Sizes</td>
           <td>Price</td>
         </tr>
         {{#each items}}
         <tr class="item">
           <td>{{name}}</td>
           <td>{{quantity}}</td>
+          <td>{{sizes}}</td>
           <td>₹{{price}}</td>
         </tr>
         {{/each}}
         <tr class="total">
+          <td></td>
           <td></td>
           <td><strong>Total:</strong></td>
           <td>₹{{totalAmount}}</td>

@@ -14,51 +14,60 @@ const CartItems = () => {
     decreaseCartQuantity,
   } = useContext(ShopContext);
 
-  const navigate = useNavigate(); // React Router's navigation hook
+  const navigate = useNavigate();
 
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
-        <p>Products</p>
+        <p>Product</p>
         <p>Title</p>
         <p>Price</p>
-        <p>Size</p> {/* Add a column for Size */}
+        <p>Sizes</p>
         <p>Quantity</p>
         <p>Total</p>
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
-          return (
-            <div key={e.id}>
-              <div className="cartitems-format cartitems-format-main">
-                <img src={e.image} alt="" className="carticon-product-icon" />
-                <p>{e.name}</p>
-                <p>INR {e.new_price}</p>
-                <p>{e.size || "N/A"}</p> {/* Display size here */}
-                <div className="cartitems-quantity">
-                  <button onClick={() => decreaseCartQuantity(e.id)}>-</button>
-                  <span>{cartItems[e.id]}</span>
-                  <button onClick={() => increaseCartQuantity(e.id)}>+</button>
-                </div>
-                <p>INR {(e.new_price * cartItems[e.id]).toFixed(2)}</p>
-                <img
-                  className="cartitems-remove-icon"
-                  src={remove_icon}
-                  onClick={() => {
-                    removeFromCart(e.id);
-                    console.log("Removed item with id:", e.id);
-                  }}
-                  alt="Remove item"
-                />
+
+      {Object.entries(cartItems).map(([itemId, cartItem]) => {
+        const product = all_product.find(
+          (product) => product.id === parseInt(itemId)
+        );
+
+        if (!product) return null;
+
+        return (
+          <div key={itemId}>
+            <div className="cartitems-format cartitems-format-main">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="carticon-product-icon"
+              />
+              <p>{product.name}</p>
+              <p>INR {product.new_price}</p>
+              <p>{cartItem.sizes.join(", ")}</p> {/* Display sizes */}
+              <div className="cartitems-quantity">
+                {/* <button onClick={() => decreaseCartQuantity(itemId)}>-</button> */}
+                <span>{cartItem.quantity}</span>
+                {/* <button onClick={() => increaseCartQuantity(itemId)}>+</button> */}
               </div>
-              <hr />
+              <p>INR {(product.new_price * cartItem.quantity).toFixed(2)}</p>
+              <img
+                className="cartitems-remove-icon"
+                src={remove_icon}
+                onClick={() => {
+                  removeFromCart(itemId);
+                  console.log("Removed item with id:", itemId);
+                }}
+                alt="Remove"
+              />
             </div>
-          );
-        }
-        return null;
+            <hr />
+          </div>
+        );
       })}
+
       <div className="cartitems-down">
         <div className="cartitems-total">
           <h1>Cart Totals</h1>
@@ -84,7 +93,7 @@ const CartItems = () => {
         </div>
         <div className="cartitems-promocode">
           <p>
-            <b>If you have a promo code, Enter it here</b>
+            <b>If you have a promo code, enter it here</b>
           </p>
           <div className="cartitems-promobox">
             <input type="text" placeholder="Promo code" />

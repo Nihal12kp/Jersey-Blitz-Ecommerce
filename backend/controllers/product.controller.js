@@ -75,31 +75,70 @@ export const searchproduct = async (req, res) => {
   }
 };
 
+// ************************* play ********************************************
+
 // Endpoint for adding products to cart
+// export const addCart = async (req, res) => {
+//   // console.log("added", req.body.itemId);
+//   let userData = await User.findOne({ _id: req.user.id });
+//   userData.cartData[req.body.itemId] += 1;
+//   await User.findOneAndUpdate(
+//     { _id: req.user.id },
+//     { cartData: userData?.cartData }
+//   );
+//   res.send("Added");
+// };
+
 export const addCart = async (req, res) => {
-  // console.log("added", req.body.itemId);
-  let userData = await User.findOne({ _id: req.user.id });
-  userData.cartData[req.body.itemId] += 1;
-  await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { cartData: userData?.cartData }
-  );
-  res.send("Added");
+  const { itemId, size } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  // Initialize if item doesn't exist
+  const currentItem = user.cartData[itemId] || { quantity: 0, sizes: [] };
+
+  // Add unique size
+  if (size && !currentItem.sizes.includes(size)) {
+    currentItem.sizes.push(size);
+  }
+
+  // Increase quantity
+  currentItem.quantity += 1;
+
+  // Save back to cartData
+  user.cartData[itemId] = currentItem;
+
+  // Tell Mongoose the nested object changed
+  user.markModified('cartData');
+
+  await user.save();
+
+  res.json({ success: true, message: "Added to cart" });
 };
+
+
+
+// *********************************************************************
+
+
 
 //   endpoint for removing product
 export const removecart = async (req, res) => {
-  // console.log("removed", req.body.itemId);
-  let userData = await User.findOne({ _id: req.user.id });
+  const { itemId } = req.body;
 
-  if (userData?.cartData[req.body.itemId] > 0)
-    userData.cartData[req.body.itemId] -= 1;
-  await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { cartData: userData?.cartData }
-  );
-  res.send("Removed");
+  const user = await User.findById(req.user.id);
+
+  if (user.cartData[itemId]) {
+    delete user.cartData[itemId];
+  user.markModified('cartData');
+     // Remove the entire item from cartData
+    await user.save();
+    return res.json({ message: "Item removed from cart" });
+  }
+
+  return res.status(404).json({ message: "Item not found in cart" });
 };
+
 
 //  creating endpoint to get cartdata
 export const getcart = async (req, res) => {

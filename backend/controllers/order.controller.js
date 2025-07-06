@@ -32,13 +32,14 @@ export const placeOrder = async (req, res) => {
 
     for (const itemId in user.cartData) {
       const product = await Product.findOne({ id: itemId });
-      const quantity = user.cartData[itemId];
+      const cartEntry = user.cartData[itemId];
 
-      if (product && quantity > 0) {
-        const itemTotal = product.new_price * quantity;
+      if (product && cartEntry.quantity > 0) {
+        const itemTotal = product.new_price * cartEntry.quantity;
         items.push({
           productId: product._id,
-          quantity,
+          quantity: cartEntry.quantity,
+          sizes: cartEntry.sizes, // optional: store sizes in order
           price: itemTotal,
         });
         totalAmount += itemTotal;
