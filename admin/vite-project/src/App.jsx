@@ -2,17 +2,23 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Admin from "./Pages/Admin/Admin";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 const App = () => {
   return (
     <Routes>
-      {/* Main admin route with nested routes */}
-      <Route path="/admin/*" element={<Admin />} />
+      {/* Protected admin route */}
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Admin login route */}
+      {/* Public routes */}
       <Route path="/adminlogin" element={<AdminLogin />} />
-
-      {/* Redirect base path to login */}
       <Route path="/" element={<AdminLogin />} />
     </Routes>
   );

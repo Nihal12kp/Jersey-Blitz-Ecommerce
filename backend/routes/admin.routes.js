@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  adminLogin,
   addproduct,
   allproduct,
   toggleProductStock,
@@ -10,6 +11,8 @@ import {
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
+
+router.post("/adminlogin", adminLogin)
 
 router.post("/addproduct", addproduct);
 router.get("/allproducts", allproduct);

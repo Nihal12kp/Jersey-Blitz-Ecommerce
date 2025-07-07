@@ -3,18 +3,39 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./AdminLogin.css";
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // Initialize navigate
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Login logic
-    if (username === "nihal" && password === "nihal123") {
-      alert("Login successful!");
-      navigate("/admin"); // Navigate to the Admin page
-    } else {
-      alert("Invalid username or password.");
+
+    try {
+      const res = await fetch(`${apiUrl}/admin/adminlogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        localStorage.setItem("admin-token", data.token);
+        alert("Login successful!");
+        navigate("/admin/addproduct");
+      } else {
+        alert(data.message || "Invalid Email or password.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -24,13 +45,13 @@ const AdminLogin = () => {
         <h2>Admin Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your Email"
               required
             />
           </div>

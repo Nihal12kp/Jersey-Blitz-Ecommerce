@@ -1,6 +1,38 @@
 import Product from "../models/productSchema.js";
 import User from "../models/userScema.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+
+export const adminLogin= async (req, res) => {
+  let user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return res.json({ errors: "User doesn't Exist" });
+  }
+  if (!user.isAdmin) {
+    return res.json({ errors: "You are not an admin, You can't login." });
+  }
+  if (user) {
+    const passVerify = await bcrypt.compare(req.body.password, user.password);
+    if (!passVerify) {
+      return res.json({ message: "Username or Password is Incorrect! " });
+    }
+    if (passVerify) {
+      const data = {
+        user: {
+          id: user.id,
+          admin: user.isAdmin
+        },
+      };
+      const token = jwt.sign(data, "secret_ecom");
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, errors: "Email or Password is incorrect" });
+    }
+  } else {
+    res.json({ success: false, errors: "Email or Password is incorrect" });
+  }
+};
 
 // API to add product
 export const addproduct = async (req, res) => {
@@ -139,13 +171,13 @@ export const updateproduct = async (req, res) => {
   }
 };
 
-//   to get all users
+//   to get all non-admin users
 export const allusers = async (req, res) => {
   try {
     const users = await User.find(
-      {},
+      { isAdmin: false }, // Only non-admin users
       { name: 1, email: 1, cartData: 1, isBanned: 1 }
-    ); // Include banned status
+    );
     res.json({ success: true, users });
   } catch (error) {
     console.error(error);
@@ -154,6 +186,7 @@ export const allusers = async (req, res) => {
       .json({ success: false, message: "Error retrieving users." });
   }
 };
+
 
 // Toggle user banned status (admin only)
 export const userban = async (req, res) => {

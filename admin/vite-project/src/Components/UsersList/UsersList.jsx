@@ -36,16 +36,13 @@ const UsersList = () => {
 
   const handleBanUnban = async (userId, isBanned) => {
     try {
-      const res = await fetch(
-        `${apiUrl}/admin/user/${userId}/ban`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ isBanned: !isBanned }),
-        }
-      );
+      const res = await fetch(`${apiUrl}/admin/user/${userId}/ban`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isBanned: !isBanned }),
+      });
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -68,7 +65,7 @@ const UsersList = () => {
 
   return (
     <div className="users-list">
-      <h2>User List</h2>
+      <h2>User List - Total : {users.length}</h2>
       {error && <p className="error">{error}</p>}
       <table>
         <thead>
@@ -86,12 +83,10 @@ const UsersList = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                {user.cartData
-                  ? Object.values(user.cartData).reduce(
-                      (sum, qty) => sum + qty,
-                      0
-                    )
-                  : 0}
+                {Object.values(user.cartData || {}).reduce(
+                  (total, item) => total + item.quantity,
+                  0
+                )}
               </td>
               <td>{user.isBanned ? "Banned" : "Active"}</td>
               <td>
