@@ -217,17 +217,19 @@ const ListProduct = () => {
                 })
               }
             />
-            <label>Sizes:</label>
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
-              <label key={size}>
-                <input
-                  type="checkbox"
-                  checked={updatedProduct.sizes?.includes(size)}
-                  onChange={() => handleSizeChange(size)}
-                />
-                {size}
-              </label>
-            ))}
+            <label className="product-size">Sizes:</label>
+            <div className="product-size">
+              {["S", "M", "L", "XL", "XXL"].map((size) => (
+                <label key={size}>
+                  <input
+                    type="checkbox"
+                    checked={updatedProduct.sizes?.includes(size)}
+                    onChange={() => handleSizeChange(size)}
+                  />
+                  {size}
+                </label>
+              ))}
+            </div>
 
             <button onClick={updateProduct}>Update</button>
             <button onClick={() => setSelectedProduct(null)}>Cancel</button>

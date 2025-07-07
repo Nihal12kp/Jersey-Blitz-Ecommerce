@@ -10,8 +10,8 @@ const CartItems = () => {
     all_product,
     cartItems,
     removeFromCart,
-    increaseCartQuantity,
-    decreaseCartQuantity,
+    // increaseCartQuantity,
+    // decreaseCartQuantity,
   } = useContext(ShopContext);
 
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ const CartItems = () => {
                   console.log("Removed item with id:", itemId);
                 }}
                 alt="Remove"
+                title="Remove item"
               />
             </div>
             <hr />
