@@ -28,7 +28,9 @@ const orderSchema = new mongoose.Schema(
     paidAt: { type: Date }, // Timestamp when paid
 
     status: { type: String, default: "Pending" }, // Optional: Pending, Paid, Failed
+    shoppingStatus: {type: String, default:"Order Picked"},
   },
+
   { timestamps: true }
 );
 

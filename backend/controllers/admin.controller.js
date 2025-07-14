@@ -3,8 +3,9 @@ import User from "../models/userScema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import Order from "../models/orderSchema.js";
 
-export const adminLogin= async (req, res) => {
+export const adminLogin = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.json({ errors: "User doesn't Exist" });
@@ -21,7 +22,7 @@ export const adminLogin= async (req, res) => {
       const data = {
         user: {
           id: user.id,
-          admin: user.isAdmin
+          admin: user.isAdmin,
         },
       };
       const token = jwt.sign(data, "secret_ecom");
@@ -187,7 +188,6 @@ export const allusers = async (req, res) => {
   }
 };
 
-
 // Toggle user banned status (admin only)
 export const userban = async (req, res) => {
   try {
@@ -199,5 +199,43 @@ export const userban = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: "Error updating user ban status" });
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate({
+      path: "userId",
+      select: "-password",
+    });
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error retrieving orders." });
+  }
+};
+
+// PUT /admin/orders/:orderId
+export const updateOrderStatus = async (req, res) => {
+  const { orderId } = req.params;
+  const { shoppingStatus } = req.body;
+
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { shoppingStatus },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ message: "Status updated", order: updatedOrder });
+  } catch (error) {
+    console.error("Failed to update order status", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

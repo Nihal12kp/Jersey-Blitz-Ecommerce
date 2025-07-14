@@ -92,6 +92,7 @@ const MyOrders = () => {
                   <th>Date</th>
                   <th>Items</th>
                   <th>Total (INR)</th>
+                  <th>Shopping Status</th>
                   <th>Invoice</th>
                 </tr>
               </thead>
@@ -112,6 +113,7 @@ const MyOrders = () => {
                       </td>
 
                       <td>₹{total}</td>
+                      <td>{order.shoppingStatus}</td>
                       <td>
                         <button
                           className="invoice-btn"

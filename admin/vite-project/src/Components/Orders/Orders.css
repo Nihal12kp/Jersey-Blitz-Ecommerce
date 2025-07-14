@@ -1,0 +1,180 @@
+/* ========== Base Styles ========== */
+
+.orders-list {
+  width: 80%;
+  margin: 40px auto 0 auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.orders-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #444;
+}
+
+.orders-error {
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ========== Table Styles ========== */
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.orders-table thead {
+  background-color: #4c56af;
+  color: #fff;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  font-weight: bold;
+}
+
+.orders-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.orders-table tbody tr:hover {
+  background-color: #e9f5e9;
+}
+
+.orders-table td {
+  color: #555;
+}
+
+/* ========== Dropdown Styles ========== */
+
+.orders-table td select {
+  padding: 6px 10px;
+  font-size: 0.95em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.orders-table td select:focus {
+  outline: none;
+  border-color: #4c56af;
+}
+
+/* ========== Button Styles ========== */
+
+.orders-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  background-color: #4c56af;
+  color: white;
+}
+
+.orders-button:focus {
+  outline: none;
+}
+
+.orders-button:hover {
+  opacity: 0.9;
+}
+
+.orders-button.banned {
+  background-color: #d9534f;
+}
+
+.orders-button.unbanned {
+  background-color: #4c56af;
+}
+
+.orders-button.banned:hover {
+  background-color: #c9302c;
+}
+
+.orders-button.unbanned:hover {
+  background-color: #388e3c;
+}
+
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+  .orders-list {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .orders-list h2 {
+    font-size: 1.5em;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px;
+    font-size: 0.95em;
+  }
+
+  .orders-button {
+    font-size: 0.85em;
+    padding: 6px 12px;
+  }
+
+  .orders-table td select {
+    font-size: 0.9em;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-list {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .orders-list h2 {
+    font-size: 1.3em;
+  }
+
+  .orders-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 6px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 0.9em;
+    padding: 8px;
+    white-space: nowrap;
+  }
+
+  .orders-button {
+    font-size: 0.8em;
+    padding: 5px 10px;
+  }
+
+  .orders-table td select {
+    font-size: 0.85em;
+    min-width: 130px;
+  }
+}

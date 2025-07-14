@@ -8,6 +8,8 @@ import {
   updateproduct,
   allusers,
   userban,
+  getAllOrders,
+  updateOrderStatus,
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
@@ -20,6 +22,8 @@ router.put("/:id/toggle-stock", toggleProductStock);
 router.post("/removeproduct", removeproduct);
 router.post("/updateproduct", updateproduct);
 router.get("/users", allusers);
+router.get("/orders",getAllOrders)
+router.put("/orders/:orderId", updateOrderStatus);
 
 router.put("/user/:id/ban", userban);
 
