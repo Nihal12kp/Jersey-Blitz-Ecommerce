@@ -1,15 +1,28 @@
 import React from "react";
 import "./Navbar.css";
-import jer from "../../assets/nav-logo.svg";
-import navProfile from "../../assets/nav-profile.svg";
+import { useNavigate } from "react-router-dom";
+import logo from "../../assets/nav_logo.png";
+import profileIcon from "../../assets/nav_profile.jpg";
 
-const navbar = () => {
+const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("admin-token");
+    navigate("/");
+  };
   return (
     <div className="navbar">
-      <img src={jer} alt="" className="nav-logo" />
-      <img src={navProfile} alt="" className="nav-profile" />
+      <div className="navbar-left">
+        <img src={logo} alt="Logo" className="nav-logo" />
+        <span className="admin-title">Admin Panel</span>
+      </div>
+      <div className="navbar-right">
+        <img src={profileIcon} alt="Admin" className="nav-profile" />
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
-
-export default navbar;
+export default Navbar;

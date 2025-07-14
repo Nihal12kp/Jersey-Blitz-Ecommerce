@@ -1,55 +1,112 @@
-/* Base Styles */
+/*Base Navbar*/
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 15px 60px;
-  box-shadow: 0 1px 3px -2px #000;
-  margin-bottom: 1px;
-  background: white;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #1f1f2e;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 
 .nav-logo {
-  width: 200px; /* fixed typo: "px" must not have a space */
+  height: 40px;
+  margin-right: 12px;
+}
+
+.admin-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-profile {
-  width: 75px;
-  height: auto;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  border: 2px solid #ffffff30;
+  object-fit: cover;
 }
 
-/* ===== Responsive Design ===== */
+.logout-btn {
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
 
-/* Tablets */
+.logout-btn:hover {
+  background-color: #e04344;
+  transform: scale(1.05);
+}
+
+/*  Tablet View */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 12px 30px;
+  .admin-title {
+    font-size: 1.25rem;
   }
 
-  .nav-logo {
-    width: 160px;
+  .logout-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
   }
 
   .nav-profile {
-    width: 60px;
+    height: 32px;
+    width: 32px;
+  }
+
+  .navbar {
+    padding: 10px 16px;
   }
 }
 
-/* Mobile */
+/*  Mobile View  */
 @media (max-width: 480px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
-    padding: 10px 20px;
+    gap: 8px;
+    padding: 10px 12px;
   }
 
-  .nav-logo {
-    width: 140px;
+  .navbar-left,
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-title {
+    font-size: 1.1rem;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
   }
 
   .nav-profile {
-    width: 50px;
-    align-self: flex-end;
+    height: 30px;
+    width: 30px;
   }
 }

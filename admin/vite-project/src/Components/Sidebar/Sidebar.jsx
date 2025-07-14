@@ -1,16 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import add_product_icon from "../../assets/Product_Cart.svg";
 import users_List_icon from "../../assets/Users_list_icon.svg";
 import list_product_icon from "../../assets/Product_list_icon.svg";
+import order_icon from "../../assets/orders_icon.svg";
 
 export const Sidebar = () => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("admin-token"); 
-    navigate("/");
-  };
   return (
     <div className="sidebar">
       <Link to={"/admin/addproduct"} style={{ textDecoration: "none" }}>
@@ -35,9 +31,12 @@ export const Sidebar = () => {
           <p> Users List</p>
         </div>
       </Link>
-      <button onClick={handleLogout} className="logout-btn">
-      Logout
-    </button>
+      <Link to={"/admin/orders"} style={{ textDecoration: "none" }}>
+        <div className="sidebar-item">
+          <img src={order_icon} alt="" />
+          <p>Orders</p>
+        </div>
+      </Link>
     </div>
   );
 };
